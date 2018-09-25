@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     currentKeyBoardTypeEmoji,      //表情键盘
 };
 
-@interface ViewController ()<UITextViewDelegate>
+@interface ViewController ()<UITextViewDelegate,EmojiKeyboardViewDelegate>
 @property (nonatomic) CurrentKeyBoardType currentKeyBoardType;
 //@property (nonatomic,strong)
 @property (nonatomic,strong) UITextView *inputTextView;
@@ -44,6 +44,8 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     self.emojiLists=[NSMutableArray array];
     self.currentKeyBoardType=currentKeyBoardTypeNone;
     self.allEmojiModel=[[AllEmojiModel alloc]init];
+    
+    
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     
@@ -113,6 +115,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     }];
     [self.emojiKeyboardView updateConstraintsIfNeeded];
     [self.emojiKeyboardView setHidden:YES];
+    self.emojiKeyboardView.delegate=self;
    
 }
 
@@ -195,4 +198,12 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     }];
 }
 
+
+- (void)didclickEmoji:(EmojiItem *)emojiItem{
+    self.inputTextView.text=[self.inputTextView.text stringByAppendingString:emojiItem.Word];
+}
+
+- (void)didclickSend{
+    NSLog(@"%@",self.inputTextView.text);
+}
 @end

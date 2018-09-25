@@ -18,8 +18,7 @@
 @property (nonatomic,strong) UIButton *sendMessageButton;
 @property (nonatomic,strong) UIScrollView *emojiCateScrollView;
 
-@property (nonatomic,strong) AllEmojiModel *allEmojiModel;
-@property (nonatomic) NSUInteger currentEmojiCateIndex;
+
 @property (nonatomic) CGFloat ScreenWidth;
 
 @end
@@ -76,7 +75,7 @@
     self.sendMessageButton=[[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width-40,160 , 40, 40)];
     [self addSubview:self.sendMessageButton];
     [self.sendMessageButton setTitle:@"send" forState:UIControlStateNormal];
-
+    [self.sendMessageButton addTarget:self action:@selector(sendMessageButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     self.emojiCateScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(40, 160, self.frame.size.width-80, 40)];
     [self addSubview:self.emojiCateScrollView];
@@ -87,6 +86,11 @@
 
 +(BOOL)requiresConstraintBasedLayout{
     return YES;
+}
+
+
+-(void) sendMessageButtonClick:(UIButton *)sender{
+    [self.delegate didclickSend];
 }
 
 - (NSUInteger)getNumOfSections:(EmojiCategory *)emojiCate{
@@ -232,6 +236,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     EmojiItem * emoji=[self caculateEmojiItemForIndexpath:indexPath];
+    [self.delegate didclickEmoji:emoji];
     NSLog(@"emoji img :%@",emoji.Word);
 }
 
