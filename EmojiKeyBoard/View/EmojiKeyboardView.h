@@ -16,6 +16,7 @@
 
 @optional
 -(void) didclickSend;
+-(void) didclickDelete;
 @end
 
 @interface EmojiKeyboardView : UIView

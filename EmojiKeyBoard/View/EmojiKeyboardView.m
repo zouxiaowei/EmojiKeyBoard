@@ -98,9 +98,9 @@
     if(emojiCate==nil||emojiCate.emojiKind<1){
         return 0;
     }else{
-        if(emojiCate.emojiKind==1){
+        if(emojiCate.emojiKind==EmojiKindNormal){
             divNum=20;
-        }else{
+        }else if(emojiCate.emojiKind==EmojiKindTextEmoji||emojiCate.emojiKind==EmojiKindTextDescription){
             divNum=8;
         }
     }
@@ -196,8 +196,15 @@
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    
-    return 21;
+    NSUInteger cateIndex=[self caculateCateIndexBySection:section];
+    EmojiKind emojiKind=self.allEmojiModel.allEmojis[cateIndex].emojiKind;
+    if(emojiKind==EmojiKindNormal){
+       return 21;
+    }else if(emojiKind==EmojiKindTextEmoji||emojiKind==EmojiKindTextDescription){
+        return 9;
+    }else{
+        return 0;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -236,7 +243,14 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     EmojiItem * emoji=[self caculateEmojiItemForIndexpath:indexPath];
-    [self.delegate didclickEmoji:emoji];
+    if(emoji==nil){
+        
+    }else if([emoji.Word isEqualToString:@"delete"]){
+        [self.delegate didclickDelete];
+    }else{
+        [self.delegate didclickEmoji:emoji];
+    }
+    
     NSLog(@"emoji img :%@",emoji.Word);
 }
 

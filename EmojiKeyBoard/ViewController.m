@@ -77,10 +77,10 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 
 }
 -(void)createUI{
-    self.view.backgroundColor=[UIColor lightGrayColor];
+    self.view.backgroundColor=[UIColor whiteColor];
     
     self.inputTextView=[[UITextView alloc]init];
-    self.inputTextView.backgroundColor=[UIColor whiteColor];
+    self.inputTextView.backgroundColor=[UIColor lightGrayColor];
     [self.view addSubview:self.inputTextView];
     self.inputTextView.delegate=self;
     [self.inputTextView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -93,6 +93,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     
     self.emojiKeyboardButton=[[UIButton alloc]init];
     [self.view addSubview:self.emojiKeyboardButton];
+    [self.emojiKeyboardButton setBackgroundColor:[UIColor redColor]];
     [self.emojiKeyboardButton setTitle:@"emo" forState:UIControlStateNormal];
     [self.emojiKeyboardButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.inputTextView.mas_right);
@@ -205,5 +206,12 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 
 - (void)didclickSend{
     NSLog(@"%@",self.inputTextView.text);
+    self.inputTextView.text=@"";
+}
+
+- (void)didclickDelete{
+    NSString *str=self.inputTextView.text;
+    
+    self.inputTextView.text=[str substringToIndex:str.length-1];
 }
 @end
