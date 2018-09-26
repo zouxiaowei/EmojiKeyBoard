@@ -11,8 +11,7 @@
 @interface EmojiItemViewCell()
 
 @property (nonatomic,strong) UIImageView *emojiImageView;
-
-@property (nonatomic,strong) UILabel *emojiName;
+@property (nonatomic,strong) UILabel *emojiWordLabel;
 
 @end
 
@@ -36,6 +35,13 @@
     }];
     self.emojiImageView.contentMode=UIViewContentModeScaleAspectFit;
     
+    self.emojiWordLabel=[[UILabel alloc]init];
+    [self.contentView addSubview:self.emojiWordLabel];
+    [self.emojiWordLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.bottom.right.equalTo(self);
+    }];
+    self.emojiWordLabel.textAlignment=NSTextAlignmentCenter;
+    self.emojiWordLabel.font=[UIFont systemFontOfSize:11];
 }
 
 
@@ -44,8 +50,16 @@
     if(_emoji){
         NSString *imgName=_emoji.ImageName;
 //        NSString *imgWord=_emoji.Word;
-        UIImage *image=[UIImage imageNamed:imgName];
-        self.emojiImageView.image=image;
+        if(imgName==nil){
+            self.emojiImageView.hidden=YES;
+            self.emojiWordLabel.hidden=NO;
+            self.emojiWordLabel.text=emoji.Word;
+        }else{
+            self.emojiWordLabel.hidden=YES;
+            self.emojiImageView.hidden=NO;
+            UIImage *image=[UIImage imageNamed:imgName];
+            self.emojiImageView.image=image;
+        }
         
     }
 }

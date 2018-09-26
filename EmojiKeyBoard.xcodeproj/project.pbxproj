@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00A3A5BFE15E68D2EB656D2C /* libPods-EmojiKeyBoardTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB6D888A734F944E79DA73A9 /* libPods-EmojiKeyBoardTests.a */; };
+		883C4FF2215B5F3100426B73 /* emotion.txt in Resources */ = {isa = PBXBuildFile; fileRef = 883C4FF0215B5F3000426B73 /* emotion.txt */; };
+		883C4FF3215B5F3100426B73 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 883C4FF1215B5F3100426B73 /* words.txt */; };
 		888AB8D4215229E100FFDB92 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 888AB8D3215229E100FFDB92 /* AppDelegate.m */; };
 		888AB8D7215229E100FFDB92 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 888AB8D6215229E100FFDB92 /* ViewController.m */; };
 		888AB8DA215229E100FFDB92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 888AB8D8215229E100FFDB92 /* Main.storyboard */; };
@@ -289,6 +291,8 @@
 		796EB23E15737C8699E3EAFC /* Pods-EmojiKeyBoardTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoardTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoardTests/Pods-EmojiKeyBoardTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F45F7CD32A50A64022CAE25 /* Pods-EmojiKeyBoardUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoardUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoardUITests/Pods-EmojiKeyBoardUITests.release.xcconfig"; sourceTree = "<group>"; };
 		80174B85EFEF11081E248BAF /* Pods-EmojiKeyBoardUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoardUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoardUITests/Pods-EmojiKeyBoardUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		883C4FF0215B5F3000426B73 /* emotion.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = emotion.txt; sourceTree = "<group>"; };
+		883C4FF1215B5F3100426B73 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 		888AB8CF215229E100FFDB92 /* EmojiKeyBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmojiKeyBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		888AB8D2215229E100FFDB92 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		888AB8D3215229E100FFDB92 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -621,6 +625,8 @@
 		888AB8D1215229E100FFDB92 /* EmojiKeyBoard */ = {
 			isa = PBXGroup;
 			children = (
+				883C4FF0215B5F3000426B73 /* emotion.txt */,
+				883C4FF1215B5F3100426B73 /* words.txt */,
 				888AB90C215248AE00FFDB92 /* Resources */,
 				888AB90B2152482000FFDB92 /* View */,
 				888AB90A2152481600FFDB92 /* Model */,
@@ -1090,6 +1096,7 @@
 				888ABA6C2152490700FFDB92 /* horse@2x.png in Resources */,
 				888ABAE02152490700FFDB92 /* wink@2x.png in Resources */,
 				888ABA922152490700FFDB92 /* o@2x.png in Resources */,
+				883C4FF3215B5F3100426B73 /* words.txt in Resources */,
 				888AB90E215248C800FFDB92 /* emoji.plist in Resources */,
 				888ABA0B2152490700FFDB92 /* beer@2x.png in Resources */,
 				888ABAB42152490700FFDB92 /* see_no_evil_monkey@2x.png in Resources */,
@@ -1141,6 +1148,7 @@
 				888ABA112152490700FFDB92 /* birthday@2x.png in Resources */,
 				888ABA352152490700FFDB92 /* cry@2x.png in Resources */,
 				888ABA602152490700FFDB92 /* hamster@2x.png in Resources */,
+				883C4FF2215B5F3100426B73 /* emotion.txt in Resources */,
 				888ABAAF2152490700FFDB92 /* rolling_on_the_floor_laughing@2x.png in Resources */,
 				888ABA7C2152490700FFDB92 /* lollipop@2x.png in Resources */,
 				888ABA0E2152490700FFDB92 /* bike@2x.png in Resources */,

@@ -10,7 +10,6 @@
 #import "EmojiItem.h"
 #import "AllEmojiModel.h"
 @protocol EmojiKeyboardViewDelegate <NSObject>
-
 @required
 -(void) didclickEmoji:(EmojiItem *)emojiItem;
 
@@ -19,13 +18,17 @@
 -(void) didclickDelete;
 @end
 
+
 @interface EmojiKeyboardView : UIView
 
 @property (nonatomic,strong) AllEmojiModel *allEmojiModel;
 @property (nonatomic) NSUInteger currentEmojiCateIndex;
 @property (nonatomic,weak) id<EmojiKeyboardViewDelegate> delegate;
 
+
 - (instancetype)initWithFrame:(CGRect)frame;
 -(void) initWithAllEmojiModel:(AllEmojiModel *)allEmojiModel;
 -(void) changeEmojiListTo:(int)cateIndex;
+-(void) reloadData;
+
 @end

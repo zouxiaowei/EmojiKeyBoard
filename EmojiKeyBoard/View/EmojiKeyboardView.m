@@ -18,7 +18,6 @@
 @property (nonatomic,strong) UIButton *sendMessageButton;
 @property (nonatomic,strong) UIScrollView *emojiCateScrollView;
 
-
 @property (nonatomic) CGFloat ScreenWidth;
 
 @end
@@ -119,6 +118,7 @@
 -(void) initWithAllEmojiModel:(AllEmojiModel *)allEmojiModel{
     self.allEmojiModel=allEmojiModel;
     for(int i=0;i<self.allEmojiModel.allEmojis.count;i++){
+        //下方表情类别滑动栏
         UIButton *cateButton=[[UIButton alloc]initWithFrame:CGRectMake(i*40, 0, 40, 40)];
         [cateButton setImage:[UIImage imageNamed:self.allEmojiModel.allEmojis[i].cateImg] forState:UIControlStateNormal];
         [cateButton setTag:i];
@@ -149,29 +149,61 @@
     NSInteger section=indexPath.section;
     NSInteger item=indexPath.item;
     
+    self.currentEmojiCateIndex=[self caculateCateIndexBySection:indexPath.section];
+    EmojiKind emojiKind=self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].emojiKind;
+    
     for(EmojiCategory *emojiCate in self.allEmojiModel.allEmojis){
         if(section >=[self getNumOfSections:emojiCate]){
             section-=[self getNumOfSections:emojiCate];
         }else break;
     }
-
-    if(item%20==0&&item>0){
-        //删除键
-        EmojiItem *deleteEmoji=[EmojiItem new];
-        deleteEmoji.Word=@"delete";
-        return deleteEmoji;
-    }else{
-        //正常表情
-        int index=floor((float)item/3)+(item%3)*7+section*20;
-        
-        if(index<self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems.count)
+    
+    switch (emojiKind) {
+        case EmojiKindNormal:
+            {
+                if(item%20==0&&item>0){
+                    //删除键
+                    EmojiItem *deleteEmoji=[EmojiItem new];
+                    deleteEmoji.Word=@"delete";
+                    return deleteEmoji;
+                }else{
+                    //正常表情
+                    int index=floor((float)item/3)+(item%3)*7+section*20;
+                    
+                    if(index<self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems.count)
+                    {
+                        return self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems[index];
+                    }else{
+                        //空白区域
+                        return [EmojiItem new];
+                    }
+                }
+            }
+            break;
+        case EmojiKindTextEmoji: case EmojiKindTextDescription:
         {
-            return self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems[index];
-        }else{
-            //空白区域
-            return [EmojiItem new];
+            if(item%8==0&&item>0){
+                //删除键
+                EmojiItem *deleteEmoji=[EmojiItem new];
+                deleteEmoji.Word=@"delete";
+                return deleteEmoji;
+            }else{
+                //正常表情
+                int index=floor((float)item/3)+(item%3)*3+section*8;
+                
+                if(index<self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems.count)
+                {
+                    return self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems[index];
+                }else{
+                    //空白区域
+                    return [EmojiItem new];
+                }
+            }
         }
+        default:
+            break;
     }
+    
     
 }
 
@@ -217,8 +249,14 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSUInteger cateIndex=[self caculateCateIndexBySection:indexPath.section];
+    EmojiKind emojiKind=self.allEmojiModel.allEmojis[cateIndex].emojiKind;
+    if(emojiKind==EmojiKindNormal){
+        return CGSizeMake((int)self.ScreenWidth/7, 40);
+    }else{
+        return CGSizeMake((int)self.ScreenWidth/3, 40);
+    }
     
-    return CGSizeMake((int)self.ScreenWidth/7, 40);
     
 }
 
@@ -256,15 +294,20 @@
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
     int section=round(targetContentOffset->x/_ScreenWidth);
-    int emojiCateIndex=(int)[self caculateCateIndexBySection:section];
+    self.currentEmojiCateIndex=(int)[self caculateCateIndexBySection:section];
     
-    self.emojiControl.numberOfPages=[self getNumOfSections:self.allEmojiModel.allEmojis[emojiCateIndex]];
+    self.emojiControl.numberOfPages=[self getNumOfSections:self.allEmojiModel.allEmojis[self.currentEmojiCateIndex]];
     for(int i=0;i<self.allEmojiModel.allEmojis.count;i++){
         if(section>=[self getNumOfSections:self.allEmojiModel.allEmojis[i]]){
             section-=[self getNumOfSections:self.allEmojiModel.allEmojis[i]];
         }else break;
     }
     self.emojiControl.currentPage=section;
+}
+
+-(void)reloadData{
+    [self.emojiArea reloadData];
+    [self.emojiCateScrollView reloadInputViews];
 }
 
 @end

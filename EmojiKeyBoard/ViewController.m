@@ -66,13 +66,29 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     aEmojiCate.EmojiItems=self.emojis;
     aEmojiCate.emojiKind=EmojiKindNormal;
     aEmojiCate.cateImg=@"alien";
-    self.allEmojiModel.allEmojis=[NSArray arrayWithObjects:aEmojiCate,aEmojiCate,aEmojiCate,nil];
-    
-    [self.emojiLists addObject:self.emojis];
-    [self.emojiLists addObject:self.emojis];
-    [self.emojiLists addObject:self.emojis];
-    
 
+    
+//    [self.emojiLists addObject:self.emojis];
+//    [self.emojiLists addObject:self.emojis];
+    
+    
+    //读取颜文字
+    NSString *path1=[[NSBundle mainBundle]pathForResource:@"emotion" ofType:@"txt"];
+    NSArray *lines1=[NSArray arrayWithArray:[[NSString stringWithContentsOfFile:path1 encoding:NSUTF8StringEncoding error:nil] componentsSeparatedByString:@"\n"]];
+    NSMutableArray<EmojiItem *>*textEmojis=[NSMutableArray array];
+    for(NSString *textEmoji in lines1){
+        EmojiItem *tempEmoji=[EmojiItem new];
+        tempEmoji.Word=textEmoji;
+        tempEmoji.ImageName=nil;
+        [textEmojis addObject:tempEmoji];
+    }
+    EmojiCategory *textEmojiCate=[EmojiCategory new];
+    textEmojiCate.EmojiItems=textEmojis;
+    textEmojiCate.emojiKind=EmojiKindTextEmoji;
+    textEmojiCate.cateImg=@"zzz";
+    
+    self.allEmojiModel.allEmojis=[NSArray arrayWithObjects:aEmojiCate,textEmojiCate,aEmojiCate,nil];
+   
     NSLog(@"asdadasd");
 
 }
@@ -117,18 +133,18 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     [self.emojiKeyboardView updateConstraintsIfNeeded];
     [self.emojiKeyboardView setHidden:YES];
     self.emojiKeyboardView.delegate=self;
-   
+
 }
 
 
-//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-//    [self.view endEditing:YES];
-//    [self.emojiKeyboardView setHidden:YES];
-//    self.currentKeyBoardType=currentKeyBoardTypeNone;
-//    [self.inputTextView mas_updateConstraints:^(MASConstraintMaker *make) {
-//        make.bottom.equalTo(self.view);
-//    }];
-//}
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+    [self.emojiKeyboardView setHidden:YES];
+    self.currentKeyBoardType=currentKeyBoardTypeNone;
+    [self.inputTextView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view);
+    }];
+}
 
 
 -(void)changeKeyboard:(UIButton *)sender{
@@ -201,7 +217,9 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 
 
 - (void)didclickEmoji:(EmojiItem *)emojiItem{
-    self.inputTextView.text=[self.inputTextView.text stringByAppendingString:emojiItem.Word];
+    if(emojiItem.Word){
+        self.inputTextView.text=[self.inputTextView.text stringByAppendingString:emojiItem.Word];
+    }
 }
 
 - (void)didclickSend{
@@ -214,4 +232,6 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     
     self.inputTextView.text=[str substringToIndex:str.length-1];
 }
+
+
 @end
