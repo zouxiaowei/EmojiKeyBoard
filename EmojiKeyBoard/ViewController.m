@@ -87,7 +87,23 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     textEmojiCate.emojiKind=EmojiKindTextEmoji;
     textEmojiCate.cateImg=@"zzz";
     
-    self.allEmojiModel.allEmojis=[NSArray arrayWithObjects:aEmojiCate,textEmojiCate,aEmojiCate,nil];
+    
+    //读取动作
+    NSString *path2=[[NSBundle mainBundle]pathForResource:@"words" ofType:@"txt"];
+    NSArray *lines2=[NSArray arrayWithArray:[[NSString stringWithContentsOfFile:path2 encoding:NSUTF8StringEncoding error:nil] componentsSeparatedByString:@"\n"]];
+    NSMutableArray<EmojiItem *>*wordsEmojis=[NSMutableArray array];
+    for(NSString *wordsEmoji in lines2){
+        EmojiItem *tempEmoji=[EmojiItem new];
+        tempEmoji.Word=wordsEmoji;
+        tempEmoji.ImageName=nil;
+        [wordsEmojis addObject:tempEmoji];
+    }
+    EmojiCategory *wordsEmojiCate=[EmojiCategory new];
+    wordsEmojiCate.EmojiItems=wordsEmojis;
+    wordsEmojiCate.emojiKind=EmojiKindTextDescription;
+    wordsEmojiCate.cateImg=@"x";
+    
+    self.allEmojiModel.allEmojis=[NSArray arrayWithObjects:aEmojiCate,textEmojiCate,wordsEmojiCate,nil];
    
     NSLog(@"asdadasd");
 

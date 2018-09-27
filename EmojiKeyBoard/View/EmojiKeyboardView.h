@@ -12,8 +12,6 @@
 @protocol EmojiKeyboardViewDelegate <NSObject>
 @required
 -(void) didclickEmoji:(EmojiItem *)emojiItem;
-
-@optional
 -(void) didclickSend;
 -(void) didclickDelete;
 @end
@@ -24,11 +22,10 @@
 @property (nonatomic,strong) AllEmojiModel *allEmojiModel;
 @property (nonatomic) NSUInteger currentEmojiCateIndex;
 @property (nonatomic,weak) id<EmojiKeyboardViewDelegate> delegate;
-
+@property (nonatomic) CGFloat ScreenWidth;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 -(void) initWithAllEmojiModel:(AllEmojiModel *)allEmojiModel;
 -(void) changeEmojiListTo:(int)cateIndex;
--(void) reloadData;
 
 @end

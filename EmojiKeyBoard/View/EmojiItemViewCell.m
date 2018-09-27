@@ -49,7 +49,6 @@
     _emoji=emoji;
     if(_emoji){
         NSString *imgName=_emoji.ImageName;
-//        NSString *imgWord=_emoji.Word;
         if(imgName==nil){
             self.emojiImageView.hidden=YES;
             self.emojiWordLabel.hidden=NO;
