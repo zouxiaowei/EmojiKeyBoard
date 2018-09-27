@@ -53,14 +53,14 @@
     [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     
     //emoji区 UICollectionView
-    self.emojiArea=[[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 120) collectionViewLayout:layout];
+    self.emojiArea = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 120) collectionViewLayout:layout];
     [self addSubview:self.emojiArea];
-    self.emojiArea.delegate=self;
-    self.emojiArea.dataSource=self;
-    self.emojiArea.backgroundColor=[UIColor whiteColor];
-    self.emojiArea.pagingEnabled=YES;
-    self.emojiArea.showsHorizontalScrollIndicator=NO;
-    self.emojiArea.showsVerticalScrollIndicator=NO;
+    self.emojiArea.delegate = self;
+    self.emojiArea.dataSource = self;
+    self.emojiArea.backgroundColor = [UIColor whiteColor];
+    self.emojiArea.pagingEnabled = YES;
+    self.emojiArea.showsHorizontalScrollIndicator = NO;
+    self.emojiArea.showsVerticalScrollIndicator = NO;
     [self.emojiArea registerClass:[EmojiItemViewCell class] forCellWithReuseIdentifier:@"EmojiItemViewCell"];
     
     //pageControl 圆点标识
@@ -91,24 +91,30 @@
 
 }
 
-+(BOOL)requiresConstraintBasedLayout{
+//controller 中数据源发生变化后需要调用此方法进行重新配置view
+- (void)reloadAllData:(AllEmojiModel *)emojiModel {
+    self.allEmojiModel = emojiModel;
+    [self initCatePanelWithAllEmojiModel:self.allEmojiModel];
+    [self.emojiArea reloadData];
+}
+
+
++ (BOOL)requiresConstraintBasedLayout {
     return YES;
 }
 
-//controller 中数据源发生变化后需要调用此方法进行重新配置view
--(void) reloadAllData{
-    self.allEmojiModel=[self.datasource emojiEmodelForEmojiKeyBoard];
-    [self initWithAllEmojiModel:self.allEmojiModel];
-}
-
 //委托
--(void) addEmojiCateButtonClick:(UIButton *)sender{
-    [self.delegate didclickAdd];
+- (void)addEmojiCateButtonClick:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(didClickAdd)]) {
+        [self.delegate didClickAdd];
+    }
 }
 
 //委托 对应的Controller中实现didclickSend方法
--(void) sendMessageButtonClick:(UIButton *)sender{
-    [self.delegate didclickSend];
+- (void)sendMessageButtonClick:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(didClickSend)]) {
+        [self.delegate didClickSend];
+    }
 }
 
 /*
@@ -216,9 +222,9 @@
  * 1.传入section，计算当前是第几类表情
  */
 -(NSUInteger)getCateIndexBySection:(NSUInteger)section{
-    NSUInteger cateIndex=0;
-    while(section>=[self getNumOfSections:self.allEmojiModel.allEmojis[cateIndex]]){
-        section-=[self getNumOfSections:self.allEmojiModel.allEmojis[cateIndex]];
+    NSUInteger cateIndex = 0;
+    while(section >= [self getNumOfSections:self.allEmojiModel.allEmojis[cateIndex]]){
+        section -= [self getNumOfSections:self.allEmojiModel.allEmojis[cateIndex]];
         cateIndex++;
     }
     return cateIndex;
@@ -227,25 +233,25 @@
 /*
  * 用一个AllEmojiModel对象初始化此view
  */
--(void) initWithAllEmojiModel:(AllEmojiModel *)allEmojiModel{
-    self.allEmojiModel=allEmojiModel;
-    for(int i=0;i<self.allEmojiModel.allEmojis.count;i++){
+- (void)initCatePanelWithAllEmojiModel:(AllEmojiModel *)allEmojiModel{
+    [self.emojiCateScrollView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj removeFromSuperview];
+    }];
+    for(int i=0; i<allEmojiModel.allEmojis.count; i++){
         //下方表情类别滑动栏
-        UIButton *cateButton=[[UIButton alloc]initWithFrame:CGRectMake(i*40, 0, 40, 40)];
-        [cateButton setImage:[UIImage imageNamed:self.allEmojiModel.allEmojis[i].cateImg] forState:UIControlStateNormal];
+        UIButton *cateButton = [[UIButton alloc]initWithFrame:CGRectMake(i*40, 0, 40, 40)];
+        [cateButton setImage:[UIImage imageNamed:allEmojiModel.allEmojis[i].cateImg] forState:UIControlStateNormal];
         [cateButton setTag:i];
         [cateButton addTarget:self action:@selector(changeEmojiCate:) forControlEvents:UIControlEventTouchUpInside];
         [self.emojiCateScrollView addSubview:cateButton];
     }
-    
-    [self.emojiArea reloadData];
 }
 
 /*
  * 1.根据下方scrollview中button tag跳转
  * 2.sbutton action
  */
--(void) changeEmojiCate:(UIButton *)sender{
+- (void)changeEmojiCate:(UIButton *)sender{
     if(self.currentEmojiCateIndex==sender.tag){
         return;
     }
@@ -257,7 +263,7 @@
  * 2. 修改pagecontrol小圆点个数和currentpage
  * 3. 根据cateindex计算section，生成对饮的indexpath并跳转
  */
--(void) changeEmojiListTo:(int)cateIndex{
+- (void)changeEmojiListTo:(int)cateIndex{
     self.currentEmojiCateIndex=cateIndex;
     self.emojiControl.numberOfPages=[self getNumOfSections:self.allEmojiModel.allEmojis[cateIndex]];
     self.emojiControl.currentPage=0;
@@ -265,26 +271,23 @@
     [self.emojiArea scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 }
 
-
-
 #pragma mark - collectionView代理
-
 //section数
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     int sum=0;
     for(EmojiCategory *emojiCate in self.allEmojiModel.allEmojis){
-        sum+=[self getNumOfSections:emojiCate];
+        sum += [self getNumOfSections:emojiCate];
     }
     return sum;
 }
 
 //每个section中emoji数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    NSUInteger cateIndex=[self getCateIndexBySection:section];
-    EmojiKind emojiKind=self.allEmojiModel.allEmojis[cateIndex].emojiKind;
-    if(emojiKind==EmojiKindNormal){
+    NSUInteger cateIndex = [self getCateIndexBySection:section];
+    EmojiKind emojiKind = self.allEmojiModel.allEmojis[cateIndex].emojiKind;
+    if(emojiKind == EmojiKindNormal){
        return 21;
-    }else if(emojiKind==EmojiKindTextEmoji||emojiKind==EmojiKindTextDescription){
+    }else if(emojiKind==EmojiKindTextEmoji || emojiKind==EmojiKindTextDescription){
         return 9;
     }else{
         return 0;
@@ -293,11 +296,10 @@
 
 //indexpath对应的cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    self.currentEmojiCateIndex=[self getCateIndexBySection:indexPath.section];
-    
-    EmojiItemViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"EmojiItemViewCell" forIndexPath:indexPath];
-    cell.backgroundColor=collectionView.backgroundColor;
-    cell.emoji=[self getEmojiItemByIndexpath:indexPath];
+    self.currentEmojiCateIndex = [self getCateIndexBySection:indexPath.section];
+    EmojiItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"EmojiItemViewCell" forIndexPath:indexPath];
+    cell.backgroundColor = collectionView.backgroundColor;
+    cell.emoji = [self getEmojiItemByIndexpath:indexPath];
     return cell;
 }
 
@@ -340,20 +342,23 @@
     if(emoji==nil){
         
     }else if([emoji.Word isEqualToString:@"delete"]){
-        [self.delegate didclickDelete];
+        if ([self.delegate respondsToSelector:@selector(didClickDelete)]) {
+            [self.delegate didClickDelete];            
+        }
     }else{
-        [self.delegate didclickEmoji:emoji];
+        if ([self.delegate respondsToSelector:@selector(didClickEmoji:)]) {
+            [self.delegate didClickEmoji:emoji];
+        }
     }
-    
     NSLog(@"emoji img :%@",emoji.Word);
 }
 
 #pragma mark - scrollview delegate
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
-    int section=round(targetContentOffset->x/_ScreenWidth);
+    int section = round(targetContentOffset->x / _ScreenWidth);
     self.currentEmojiCateIndex=(int)[self getCateIndexBySection:section];
     
-    self.emojiControl.numberOfPages=[self getNumOfSections:self.allEmojiModel.allEmojis[self.currentEmojiCateIndex]];
+    self.emojiControl.numberOfPages = [self getNumOfSections:self.allEmojiModel.allEmojis[self.currentEmojiCateIndex]];
     for(int i=0;i<self.allEmojiModel.allEmojis.count;i++){
         if(section>=[self getNumOfSections:self.allEmojiModel.allEmojis[i]]){
             section-=[self getNumOfSections:self.allEmojiModel.allEmojis[i]];
