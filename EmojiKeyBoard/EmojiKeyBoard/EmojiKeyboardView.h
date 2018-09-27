@@ -9,26 +9,30 @@
 #import <UIKit/UIKit.h>
 #import "AllEmojiModel.h"
 #import "EmojiItemViewCell.h"
+
 @protocol EmojiKeyboardViewDelegate <NSObject>
-@required
--(void) didclickEmoji:(EmojiItem *)emojiItem;
--(void) didclickSend;
--(void) didclickDelete;
--(void) didclickAdd;
+
+@optional
+- (void)didClickEmoji:(EmojiItem *)emojiItem;
+- (void)didClickSend;
+- (void)didClickDelete;
+- (void)didClickAdd;
+
 @end
 
 @protocol EmojiKeyboardViewDataSource <NSObject>
--(AllEmojiModel *) emojiEmodelForEmojiKeyBoard;
+- (AllEmojiModel *) emojiEmodelForEmojiKeyBoard;
 @end
 
 @interface EmojiKeyboardView : UIView
 
 @property (nonatomic,strong) AllEmojiModel *allEmojiModel;
-@property (nonatomic) NSUInteger currentEmojiCateIndex;
+@property (nonatomic,assign) NSUInteger currentEmojiCateIndex;
 @property (nonatomic,weak) id<EmojiKeyboardViewDelegate> delegate;
 @property (nonatomic,weak) id<EmojiKeyboardViewDataSource> datasource;
 @property (nonatomic) CGFloat ScreenWidth;
 
 - (instancetype)initWithFrame:(CGRect)frame;
--(void) reloadAllData;
+- (void)reloadAllData:(AllEmojiModel *)emojiModel;  //更新数据源
+
 @end

@@ -10,6 +10,6 @@
 #import "EmojiCategory.h"
 @interface AllEmojiModel : NSObject
 
-@property (nonatomic,strong) NSArray<EmojiCategory *>* allEmojis;
+@property (nonatomic,strong) NSArray<EmojiCategory *> *allEmojis;
 
 @end
