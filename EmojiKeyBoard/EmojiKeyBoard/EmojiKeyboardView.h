@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EmojiItem.h"
 #import "AllEmojiModel.h"
-
+#import "EmojiItemViewCell.h"
 @protocol EmojiKeyboardViewDelegate <NSObject>
 @required
 -(void) didclickEmoji:(EmojiItem *)emojiItem;
@@ -30,8 +29,5 @@
 @property (nonatomic) CGFloat ScreenWidth;
 
 - (instancetype)initWithFrame:(CGRect)frame;
--(void) initWithAllEmojiModel:(AllEmojiModel *)allEmojiModel;
--(void) changeEmojiListTo:(int)cateIndex;
 -(void) reloadAllData;
-
 @end

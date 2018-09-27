@@ -7,7 +7,7 @@
 //
 
 #import "EmojiItemViewCell.h"
-#import <Masonry.h>
+
 @interface EmojiItemViewCell()
 
 @property (nonatomic,strong) UIImageView *emojiImageView;

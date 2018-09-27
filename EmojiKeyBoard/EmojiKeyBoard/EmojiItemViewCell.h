@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "EmojiItem.h"
+#import <Masonry.h>
+
 static NSString *identifierEmojiItemViewCell=@"EmojiItemViewCell";
 
 

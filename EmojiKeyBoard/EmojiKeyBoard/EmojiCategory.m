@@ -10,8 +10,4 @@
 
 @implementation EmojiCategory
 
-
-
-
-
 @end

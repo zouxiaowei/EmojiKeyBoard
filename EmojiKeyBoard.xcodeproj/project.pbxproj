@@ -628,7 +628,7 @@
 				883C4FF0215B5F3000426B73 /* emotion.txt */,
 				883C4FF1215B5F3100426B73 /* words.txt */,
 				888AB90C215248AE00FFDB92 /* Resources */,
-				888AB90B2152482000FFDB92 /* View */,
+				888AB90B2152482000FFDB92 /* EmojiKeyBoard */,
 				888AB90A2152481600FFDB92 /* Model */,
 				888AB8D2215229E100FFDB92 /* AppDelegate.h */,
 				888AB8D3215229E100FFDB92 /* AppDelegate.m */,
@@ -665,25 +665,25 @@
 		888AB90A2152481600FFDB92 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		888AB90B2152482000FFDB92 /* EmojiKeyBoard */ = {
+			isa = PBXGroup;
+			children = (
 				888AB9072152480E00FFDB92 /* EmojiItem.h */,
 				888AB9082152480E00FFDB92 /* EmojiItem.m */,
 				888ABAEF2159CAE500FFDB92 /* EmojiCategory.h */,
 				888ABAF02159CAE500FFDB92 /* EmojiCategory.m */,
 				888ABAF22159D2B500FFDB92 /* AllEmojiModel.h */,
 				888ABAF32159D2B500FFDB92 /* AllEmojiModel.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		888AB90B2152482000FFDB92 /* View */ = {
-			isa = PBXGroup;
-			children = (
 				888AB904215245B100FFDB92 /* EmojiKeyboardView.h */,
 				888AB905215245B100FFDB92 /* EmojiKeyboardView.m */,
 				888ABAEC2153735100FFDB92 /* EmojiItemViewCell.h */,
 				888ABAED2153735100FFDB92 /* EmojiItemViewCell.m */,
 			);
-			path = View;
+			path = EmojiKeyBoard;
 			sourceTree = "<group>";
 		};
 		888AB90C215248AE00FFDB92 /* Resources */ = {

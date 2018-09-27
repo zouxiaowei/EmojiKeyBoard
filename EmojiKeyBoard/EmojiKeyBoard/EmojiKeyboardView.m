@@ -7,8 +7,7 @@
 //
 
 #import "EmojiKeyboardView.h"
-#import "EmojiItemViewCell.h"
-#import "AllEmojiModel.h"
+
 
 @interface EmojiKeyboardView()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
