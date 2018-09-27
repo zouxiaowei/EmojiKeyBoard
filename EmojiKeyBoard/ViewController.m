@@ -143,7 +143,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     //构造emojiModel
     self.allEmojiModel.allEmojis = [NSArray arrayWithObjects:aEmojiCate,textEmojiCate,wordsEmojiCate,nil];
     
-    [self.emojiKeyboardView reloadAllData]; //刷新数据源
+    [self.emojiKeyboardView reloadAllData:self.allEmojiModel]; //刷新数据源
 }
 
 //空白区域收回键盘
