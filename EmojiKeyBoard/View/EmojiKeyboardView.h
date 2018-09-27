@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EmojiItem.h"
 #import "AllEmojiModel.h"
+
 @protocol EmojiKeyboardViewDelegate <NSObject>
 @required
 -(void) didclickEmoji:(EmojiItem *)emojiItem;
