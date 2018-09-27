@@ -75,6 +75,7 @@
     self.addEmojiCateButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 160, 40, 40)];
     [self addSubview:self.addEmojiCateButton];
     [self.addEmojiCateButton setTitle:@"add" forState:UIControlStateNormal];
+    [self.addEmojiCateButton addTarget:self action:@selector(addEmojiCateButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     //发送消息button
     self.sendMessageButton=[[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width-40,160 , 40, 40)];
@@ -98,6 +99,11 @@
 -(void) reloadAllData{
     self.allEmojiModel=[self.datasource emojiEmodelForEmojiKeyBoard];
     [self initWithAllEmojiModel:self.allEmojiModel];
+}
+
+//委托
+-(void) addEmojiCateButtonClick:(UIButton *)sender{
+    [self.delegate didclickAdd];
 }
 
 //委托 对应的Controller中实现didclickSend方法

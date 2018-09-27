@@ -629,7 +629,6 @@
 				883C4FF1215B5F3100426B73 /* words.txt */,
 				888AB90C215248AE00FFDB92 /* Resources */,
 				888AB90B2152482000FFDB92 /* EmojiKeyBoard */,
-				888AB90A2152481600FFDB92 /* Model */,
 				888AB8D2215229E100FFDB92 /* AppDelegate.h */,
 				888AB8D3215229E100FFDB92 /* AppDelegate.m */,
 				888AB8D5215229E100FFDB92 /* ViewController.h */,
@@ -660,13 +659,6 @@
 				888AB8F8215229E200FFDB92 /* Info.plist */,
 			);
 			path = EmojiKeyBoardUITests;
-			sourceTree = "<group>";
-		};
-		888AB90A2152481600FFDB92 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		888AB90B2152482000FFDB92 /* EmojiKeyBoard */ = {

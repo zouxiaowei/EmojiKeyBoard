@@ -240,8 +240,16 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     self.inputTextView.text=[str substringToIndex:str.length-1];
 }
 
+- (void)didclickAdd {
+    NSLog(@"add click");
+    
+    return;
+}
+
+
 #pragma mark - emojiViewDataSource
 - (AllEmojiModel *)emojiEmodelForEmojiKeyBoard{
     return self.allEmojiModel;
 }
+
 @end

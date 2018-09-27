@@ -14,6 +14,7 @@
 -(void) didclickEmoji:(EmojiItem *)emojiItem;
 -(void) didclickSend;
 -(void) didclickDelete;
+-(void) didclickAdd;
 @end
 
 @protocol EmojiKeyboardViewDataSource <NSObject>
