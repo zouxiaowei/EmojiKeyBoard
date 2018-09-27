@@ -28,6 +28,7 @@
 }
 
 -(void) createUI{
+    //图片表情
     self.emojiImageView=[[UIImageView alloc]init];
     [self.contentView addSubview:self.emojiImageView];
     [self.emojiImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -35,6 +36,7 @@
     }];
     self.emojiImageView.contentMode=UIViewContentModeScaleAspectFit;
     
+    //文字表情
     self.emojiWordLabel=[[UILabel alloc]init];
     [self.contentView addSubview:self.emojiWordLabel];
     [self.emojiWordLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -46,14 +48,18 @@
 
 
 - (void)setEmoji:(EmojiItem *)emoji{
+    
     _emoji=emoji;
     if(_emoji){
+        
         NSString *imgName=_emoji.ImageName;
         if(imgName==nil){
+            //文字表情
             self.emojiImageView.hidden=YES;
             self.emojiWordLabel.hidden=NO;
             self.emojiWordLabel.text=emoji.Word;
         }else{
+            //图片表情
             self.emojiWordLabel.hidden=YES;
             self.emojiImageView.hidden=NO;
             UIImage *image=[UIImage imageNamed:imgName];

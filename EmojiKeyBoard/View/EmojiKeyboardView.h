@@ -16,16 +16,21 @@
 -(void) didclickDelete;
 @end
 
+@protocol EmojiKeyboardViewDataSource <NSObject>
+-(AllEmojiModel *) emojiEmodelForEmojiKeyBoard;
+@end
 
 @interface EmojiKeyboardView : UIView
 
 @property (nonatomic,strong) AllEmojiModel *allEmojiModel;
 @property (nonatomic) NSUInteger currentEmojiCateIndex;
 @property (nonatomic,weak) id<EmojiKeyboardViewDelegate> delegate;
+@property (nonatomic,weak) id<EmojiKeyboardViewDataSource> datasource;
 @property (nonatomic) CGFloat ScreenWidth;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 -(void) initWithAllEmojiModel:(AllEmojiModel *)allEmojiModel;
 -(void) changeEmojiListTo:(int)cateIndex;
+-(void) reloadAllData;
 
 @end

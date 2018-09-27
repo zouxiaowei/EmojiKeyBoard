@@ -95,6 +95,12 @@
     return YES;
 }
 
+//controller 中数据源发生变化后需要调用此方法进行重新配置view
+-(void) reloadAllData{
+    self.allEmojiModel=[self.datasource emojiEmodelForEmojiKeyBoard];
+    [self initWithAllEmojiModel:self.allEmojiModel];
+}
+
 //委托 对应的Controller中实现didclickSend方法
 -(void) sendMessageButtonClick:(UIButton *)sender{
     [self.delegate didclickSend];
