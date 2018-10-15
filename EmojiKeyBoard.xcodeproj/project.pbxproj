@@ -623,8 +623,6 @@
 				888AB90B2152482000FFDB92 /* EmojiKeyBoard */,
 				888AB8D2215229E100FFDB92 /* AppDelegate.h */,
 				888AB8D3215229E100FFDB92 /* AppDelegate.m */,
-				888AB8D5215229E100FFDB92 /* ViewController.h */,
-				888AB8D6215229E100FFDB92 /* ViewController.m */,
 				888AB8D8215229E100FFDB92 /* Main.storyboard */,
 				888AB8DB215229E200FFDB92 /* Assets.xcassets */,
 				888AB8DD215229E200FFDB92 /* LaunchScreen.storyboard */,
@@ -656,16 +654,9 @@
 		888AB90B2152482000FFDB92 /* EmojiKeyBoard */ = {
 			isa = PBXGroup;
 			children = (
-				888AB9072152480E00FFDB92 /* EmojiItem.h */,
-				888AB9082152480E00FFDB92 /* EmojiItem.m */,
-				888ABAEF2159CAE500FFDB92 /* EmojiCategory.h */,
-				888ABAF02159CAE500FFDB92 /* EmojiCategory.m */,
-				888ABAF22159D2B500FFDB92 /* AllEmojiModel.h */,
-				888ABAF32159D2B500FFDB92 /* AllEmojiModel.m */,
-				888AB904215245B100FFDB92 /* EmojiKeyboardView.h */,
-				888AB905215245B100FFDB92 /* EmojiKeyboardView.m */,
-				888ABAEC2153735100FFDB92 /* EmojiItemViewCell.h */,
-				888ABAED2153735100FFDB92 /* EmojiItemViewCell.m */,
+				88E225D921744461002063E6 /* View */,
+				88E225D821744450002063E6 /* Controller */,
+				88E225D72174441B002063E6 /* Model */,
 			);
 			path = EmojiKeyBoard;
 			sourceTree = "<group>";
@@ -921,6 +912,39 @@
 				888AB9FD2152490700FFDB92 /* zzz@2x.png */,
 			);
 			path = emoji;
+			sourceTree = "<group>";
+		};
+		88E225D72174441B002063E6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				888AB9072152480E00FFDB92 /* EmojiItem.h */,
+				888AB9082152480E00FFDB92 /* EmojiItem.m */,
+				888ABAEF2159CAE500FFDB92 /* EmojiCategory.h */,
+				888ABAF02159CAE500FFDB92 /* EmojiCategory.m */,
+				888ABAF22159D2B500FFDB92 /* AllEmojiModel.h */,
+				888ABAF32159D2B500FFDB92 /* AllEmojiModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		88E225D821744450002063E6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				888AB8D5215229E100FFDB92 /* ViewController.h */,
+				888AB8D6215229E100FFDB92 /* ViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		88E225D921744461002063E6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				888AB904215245B100FFDB92 /* EmojiKeyboardView.h */,
+				888AB905215245B100FFDB92 /* EmojiKeyboardView.m */,
+				888ABAEC2153735100FFDB92 /* EmojiItemViewCell.h */,
+				888ABAED2153735100FFDB92 /* EmojiItemViewCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		D0FAF7BF0999E5A19675CCFE /* Pods */ = {
