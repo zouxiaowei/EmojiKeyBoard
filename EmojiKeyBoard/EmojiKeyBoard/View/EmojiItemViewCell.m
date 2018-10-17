@@ -66,11 +66,11 @@
                 [self.emojiWordLabel setText:emoji.Word];
 //                NSArray<CALayer *> *layers = [self createEmojiLines];
 //                self.layer.sublayers = layers;
-//                self.layer.borderColor = [UIColor grayColor].CGColor;
-//                self.layer.borderWidth = 0.3f;
+                self.layer.borderColor = [UIColor grayColor].CGColor;
+                self.layer.borderWidth = 0.3f;
             }else{
-//                [self.emojiWordLabel setText:nil];
-//                self.layer.borderWidth = 0;
+                [self.emojiWordLabel setText:nil];
+                self.layer.borderWidth = 0;
 //                [self.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
 //                NSArray<CALayer *> *layers = [self createNilEmojiLines];
 //                self.layer.sublayers = layers;
@@ -81,7 +81,7 @@
             self.emojiImageView.hidden=NO;
             UIImage *image=[UIImage imageNamed:imgName];
             self.emojiImageView.image=image;
-//            self.layer.borderWidth = 0;
+            self.layer.borderWidth = 0;
 //            [self.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
 //            NSArray<CALayer *> *layers = [self createNilEmojiLines];
 //            self.layer.sublayers = layers;
