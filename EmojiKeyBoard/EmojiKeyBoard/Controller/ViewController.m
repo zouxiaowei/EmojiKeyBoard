@@ -42,8 +42,14 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     self.currentKeyBoardType = currentKeyBoardTypeNone;
     self.allEmojiModel = [AllEmojiModel new];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(keyBoardWillShow:)
+                                                name:UIKeyboardWillShowNotification
+                                              object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(keyBoardWillHide:)
+                                                name:UIKeyboardWillHideNotification
+                                              object:nil];
 }
 
 - (void)createUI{
@@ -72,10 +78,12 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
         make.height.equalTo(@40);
         make.width.equalTo(@40);
     }];
-    [self.emojiKeyboardButton addTarget:self action:@selector(changeKeyboard:) forControlEvents:UIControlEventTouchUpInside];
+    [self.emojiKeyboardButton addTarget:self
+                                 action:@selector(changeKeyboard:)
+                       forControlEvents:UIControlEventTouchUpInside];
     
     //表情键盘
-    self.emojiKeyboardView = [[EmojiKeyboardView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+    self.emojiKeyboardView = [[EmojiKeyboardView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
     [self.view addSubview:self.emojiKeyboardView];
     [self.emojiKeyboardView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.equalTo(self.view);
@@ -92,7 +100,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     NSMutableArray<EmojiItem *> *wordsEmojis = [NSMutableArray array];
     
     //emoji表情
-    NSString *emojiPath = [[NSBundle mainBundle]pathForResource:@"emoji" ofType:@"plist"];
+    NSString *emojiPath = [[NSBundle mainBundle] pathForResource:@"emoji" ofType:@"plist"];
     NSArray <EmojiItem *> *emojiList = [NSArray arrayWithContentsOfFile:emojiPath];
     for(NSDictionary *emoji in emojiList){
         EmojiItem *emojiObj = [[EmojiItem alloc]init];
@@ -108,8 +116,9 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     //读取颜文字
     NSString *path1 = [[NSBundle mainBundle]pathForResource:@"emotion" ofType:@"txt"];
     NSArray *lines1 = [NSArray arrayWithArray:[[NSString stringWithContentsOfFile:path1
-                                                                       encoding:NSUTF8StringEncoding
-                                                                          error:nil] componentsSeparatedByString:@"\n"]];
+                                                                        encoding:NSUTF8StringEncoding
+                                                                           error:nil]
+                                               componentsSeparatedByString:@"\n"]];
     for(NSString *textEmoji in lines1){
         EmojiItem *tempEmoji = [EmojiItem new];
         tempEmoji.Word = textEmoji;
@@ -126,7 +135,8 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     NSString *path2=[[NSBundle mainBundle]pathForResource:@"words" ofType:@"txt"];
     NSArray *lines2=[NSArray arrayWithArray:[[NSString stringWithContentsOfFile:path2
                                                                        encoding:NSUTF8StringEncoding
-                                                                          error:nil] componentsSeparatedByString:@"\n"]];
+                                                                          error:nil]
+                                             componentsSeparatedByString:@"\n"]];
     
     for(NSString *wordsEmoji in lines2){
         EmojiItem *tempEmoji = [EmojiItem new];

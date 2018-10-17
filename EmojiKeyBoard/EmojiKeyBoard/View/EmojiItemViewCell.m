@@ -64,11 +64,16 @@
             self.emojiImageView.hidden=YES;
             if(emoji.Word!= nil && emoji.Word.length!=0){
                 [self.emojiWordLabel setText:emoji.Word];
-                self.layer.borderColor = [UIColor grayColor].CGColor;
-                self.layer.borderWidth = 0.3f;
+//                NSArray<CALayer *> *layers = [self createEmojiLines];
+//                self.layer.sublayers = layers;
+//                self.layer.borderColor = [UIColor grayColor].CGColor;
+//                self.layer.borderWidth = 0.3f;
             }else{
-                [self.emojiWordLabel setText:nil];
-                self.layer.borderWidth = 0;
+//                [self.emojiWordLabel setText:nil];
+//                self.layer.borderWidth = 0;
+//                [self.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+//                NSArray<CALayer *> *layers = [self createNilEmojiLines];
+//                self.layer.sublayers = layers;
             }
         }else{
             //textEmojiButton图片表情
@@ -76,9 +81,35 @@
             self.emojiImageView.hidden=NO;
             UIImage *image=[UIImage imageNamed:imgName];
             self.emojiImageView.image=image;
-            self.layer.borderWidth = 0;
+//            self.layer.borderWidth = 0;
+//            [self.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+//            NSArray<CALayer *> *layers = [self createNilEmojiLines];
+//            self.layer.sublayers = layers;
         }
         
     }
+}
+
+-(NSArray<CALayer *> *)createEmojiLines{
+    NSMutableArray<CALayer *> *layers = [NSMutableArray array];
+    
+    CALayer *layer1 = [CALayer layer];
+    layer1.backgroundColor = [UIColor lightGrayColor].CGColor;
+    layer1.frame = CGRectMake(0, 0, self.frame.size.width, 0.3);
+    CALayer *layer2 = [CALayer layer];
+    layer2.backgroundColor = [UIColor lightGrayColor].CGColor;
+    layer2.frame = CGRectMake(0, 0, 0.3, self.frame.size.height);
+    CALayer *layer3 = [CALayer layer];
+    layer3.backgroundColor = [UIColor lightGrayColor].CGColor;
+    layer3.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, 0.3);
+    
+    [layers addObjectsFromArray:[NSArray arrayWithObjects:layer1,layer2,layer3, nil]];
+    
+    return layers;
+}
+-(NSArray<CALayer *> *)createNilEmojiLines{
+    NSMutableArray<CALayer *> *layers = [NSMutableArray array];
+    
+    return layers;
 }
 @end

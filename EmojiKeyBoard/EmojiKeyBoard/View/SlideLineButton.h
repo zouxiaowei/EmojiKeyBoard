@@ -19,11 +19,20 @@ typedef struct ButtonStyle {
     CGFloat slideThickness;
 }SlideButtonStyle;
 
-static SlideButtonStyle slideButtonStyleDefault = {YES,YES,YES,YES,0,1};
-static SlideButtonStyle slideButtonStyleLeft = {NO,YES,NO,NO,5,1};
-static SlideButtonStyle slideButtonStyleRight = {NO,NO,NO,YES,5,1};
-static SlideButtonStyle slideButtonStyleBottom = {NO,NO,YES,NO,5,1};
-static SlideButtonStyle slideButtonStyleTop = {YES,NO,NO,NO,5,1};
+// default 四边框 无padding
+static SlideButtonStyle slideButtonStyleDefault = {YES,YES,YES,YES,0,0.3};
+
+// 左边线 padding 5
+static SlideButtonStyle slideButtonStyleLeft = {NO,YES,NO,NO,5,0.3};
+
+// 右边线 padding 5
+static SlideButtonStyle slideButtonStyleRight = {NO,NO,NO,YES,5,0.3};
+
+// 下边线 padding 5
+static SlideButtonStyle slideButtonStyleBottom = {NO,NO,YES,NO,5,0.3};
+
+// 上边线 padding 5
+static SlideButtonStyle slideButtonStyleTop = {YES,NO,NO,NO,5,0.3};
 
 @interface SlideLineButton : UIButton
 
