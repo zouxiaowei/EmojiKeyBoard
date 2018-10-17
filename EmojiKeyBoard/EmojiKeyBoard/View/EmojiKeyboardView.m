@@ -48,7 +48,7 @@
 
 
 -(void)createUI{
-    self.backgroundColor=[UIColor redColor];
+    self.backgroundColor=[UIColor whiteColor];
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc]init];
     [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     
@@ -72,21 +72,29 @@
     self.emojiControl.pageIndicatorTintColor=[UIColor lightGrayColor];
 
     //+号button
-    self.addEmojiCateButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 160, 40, 40)];
+//    self.addEmojiCateButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 160, 40, 40)];
+    self.addEmojiCateButton = [[SlideLineButton alloc]initWithFrame:CGRectMake(0, 160, 40, 40)
+                                                   SlideButtonStyle:slideButtonStyleRight
+                                                           andColor:[UIColor lightGrayColor]];
     [self addSubview:self.addEmojiCateButton];
-    [self.addEmojiCateButton setTitle:@"add" forState:UIControlStateNormal];
+    [self.addEmojiCateButton setTitle:@"+" forState:UIControlStateNormal];
+    [self.addEmojiCateButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.addEmojiCateButton addTarget:self action:@selector(addEmojiCateButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     //发送消息button
-    self.sendMessageButton=[[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width-40,160 , 40, 40)];
+//    self.sendMessageButton=[[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width-40,160 , 40, 40)];
+    self.sendMessageButton = [[SlideLineButton alloc]initWithFrame:CGRectMake(self.frame.size.width-40,160 , 40, 40)
+                                                   SlideButtonStyle:slideButtonStyleLeft
+                                                           andColor:[UIColor lightGrayColor]];
     [self addSubview:self.sendMessageButton];
-    [self.sendMessageButton setTitle:@"send" forState:UIControlStateNormal];
+    [self.sendMessageButton setTitle:@"发送" forState:UIControlStateNormal];
+    [self.sendMessageButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.sendMessageButton addTarget:self action:@selector(sendMessageButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     //表情类别图标 UIScrollView
     self.emojiCateScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(40, 160, self.frame.size.width-80, 40)];
     [self addSubview:self.emojiCateScrollView];
-    self.emojiCateScrollView.backgroundColor=[UIColor yellowColor];
+    self.emojiCateScrollView.backgroundColor=[UIColor whiteColor];
     self.emojiCateScrollView.contentSize=CGSizeMake(self.frame.size.width-79, 40);
 
 }
@@ -240,7 +248,7 @@
     for(int i=0; i<allEmojiModel.allEmojis.count; i++){
         //下方表情类别滑动栏
         UIButton *cateButton = [[UIButton alloc]initWithFrame:CGRectMake(i*41, 0, 40, 40)];
-        SlideLineButton *cateSlideButton = [[SlideLineButton alloc]initWithFrame:CGRectMake(i*41, 0, 40, 40) SlideButtonStyle:slideButtonStyleDefault];
+        SlideLineButton *cateSlideButton = [[SlideLineButton alloc]initWithFrame:CGRectMake(i*41, 0, 40, 40) SlideButtonStyle:slideButtonStyleRight andColor:[UIColor lightGrayColor]];
         
         [cateButton setImage:[UIImage imageNamed:allEmojiModel.allEmojis[i].cateImg] forState:UIControlStateNormal];
         [cateButton setTag:i];

@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     //表情键盘开关
     self.emojiKeyboardButton = [[UIButton alloc]init];
     [self.view addSubview:self.emojiKeyboardButton];
-    [self.emojiKeyboardButton setBackgroundColor:[UIColor redColor]];
+    [self.emojiKeyboardButton setBackgroundColor:[UIColor grayColor]];
     [self.emojiKeyboardButton setTitle:@"emo" forState:UIControlStateNormal];
     [self.emojiKeyboardButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.inputTextView.mas_right);
