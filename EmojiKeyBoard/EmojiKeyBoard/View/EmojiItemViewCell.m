@@ -7,11 +7,11 @@
 //
 
 #import "EmojiItemViewCell.h"
-
+#import "SlideLineButton.h"
 @interface EmojiItemViewCell()
-
-@property (nonatomic,strong) UIImageView *emojiImageView;
-@property (nonatomic,strong) UILabel *emojiWordLabel;
+//
+//@property (nonatomic,strong) UIImageView *emojiImageView;
+@property (nonatomic,strong) SlideLineButton *emojiButton;
 
 @end
 
@@ -28,22 +28,28 @@
 }
 
 -(void) createUI{
-    //图片表情
-    self.emojiImageView=[[UIImageView alloc]init];
-    [self.contentView addSubview:self.emojiImageView];
-    [self.emojiImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self);
-    }];
-    self.emojiImageView.contentMode=UIViewContentModeScaleAspectFit;
+//    //图片表情
+//    self.emojiImageView=[[UIImageView alloc]init];
+//    [self.contentView addSubview:self.emojiImageView];
+//    [self.emojiImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.center.equalTo(self);
+//    }];
+//    self.emojiImageView.contentMode=UIViewContentModeScaleAspectFit;
+//
+//    //文字表情
+//    self.emojiWordLabel=[[UILabel alloc]init];
+//    [self.contentView addSubview:self.emojiWordLabel];
+//    [self.emojiWordLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.left.bottom.right.equalTo(self);
+//    }];
+//    self.emojiWordLabel.textAlignment=NSTextAlignmentCenter;
+//    self.emojiWordLabel.font=[UIFont systemFontOfSize:11];
     
-    //文字表情
-    self.emojiWordLabel=[[UILabel alloc]init];
-    [self.contentView addSubview:self.emojiWordLabel];
-    [self.emojiWordLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.bottom.right.equalTo(self);
-    }];
-    self.emojiWordLabel.textAlignment=NSTextAlignmentCenter;
-    self.emojiWordLabel.font=[UIFont systemFontOfSize:11];
+    
+    self.emojiButton = [[SlideLineButton alloc]initWithFrame:self.frame SlideButtonStyle:slideButtonStyleDefault];
+    [self.contentView addSubview:self.emojiButton];
+    [self.emojiButton.titleLabel setFont:[UIFont systemFontOfSize:11]];
+    self.emojiButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 
@@ -55,15 +61,18 @@
         NSString *imgName=_emoji.ImageName;
         if(imgName==nil){
             //文字表情
-            self.emojiImageView.hidden=YES;
-            self.emojiWordLabel.hidden=NO;
-            self.emojiWordLabel.text=emoji.Word;
+//            self.emojiImageView.hidden=YES;
+//            self.emojiWordLabel.hidden=NO;
+//            self.emojiWordLabel.text=emoji.Word;
+            
+            self.emojiButton.titleLabel.text = emoji.Word;
         }else{
             //图片表情
-            self.emojiWordLabel.hidden=YES;
-            self.emojiImageView.hidden=NO;
-            UIImage *image=[UIImage imageNamed:imgName];
-            self.emojiImageView.image=image;
+//            self.emojiWordLabel.hidden=YES;
+//            self.emojiImageView.hidden=NO;
+//            UIImage *image=[UIImage imageNamed:imgName];
+//            self.emojiImageView.image=image;
+            [self.emojiButton setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
         }
         
     }

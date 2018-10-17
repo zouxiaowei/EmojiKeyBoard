@@ -262,6 +262,7 @@
 		888ABAF12159CAE500FFDB92 /* EmojiCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 888ABAF02159CAE500FFDB92 /* EmojiCategory.m */; };
 		888ABAF42159D2B500FFDB92 /* AllEmojiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 888ABAF32159D2B500FFDB92 /* AllEmojiModel.m */; };
 		888CD9A8216095B300EC258D /* libMasonry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 888CD9A7216095B300EC258D /* libMasonry.a */; };
+		88E225DC217467DB002063E6 /* SlideLineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E225DB217467DB002063E6 /* SlideLineButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -555,6 +556,8 @@
 		888ABAF22159D2B500FFDB92 /* AllEmojiModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AllEmojiModel.h; sourceTree = "<group>"; };
 		888ABAF32159D2B500FFDB92 /* AllEmojiModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AllEmojiModel.m; sourceTree = "<group>"; };
 		888CD9A7216095B300EC258D /* libMasonry.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMasonry.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		88E225DA217467DB002063E6 /* SlideLineButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlideLineButton.h; sourceTree = "<group>"; };
+		88E225DB217467DB002063E6 /* SlideLineButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideLineButton.m; sourceTree = "<group>"; };
 		E80BECB6BF5E20FB9B076552 /* Pods-EmojiKeyBoard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoard.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoard/Pods-EmojiKeyBoard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -943,6 +946,8 @@
 				888AB905215245B100FFDB92 /* EmojiKeyboardView.m */,
 				888ABAEC2153735100FFDB92 /* EmojiItemViewCell.h */,
 				888ABAED2153735100FFDB92 /* EmojiItemViewCell.m */,
+				88E225DA217467DB002063E6 /* SlideLineButton.h */,
+				88E225DB217467DB002063E6 /* SlideLineButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1395,6 +1400,7 @@
 				888AB8D7215229E100FFDB92 /* ViewController.m in Sources */,
 				888AB8E2215229E200FFDB92 /* main.m in Sources */,
 				888AB9092152480E00FFDB92 /* EmojiItem.m in Sources */,
+				88E225DC217467DB002063E6 /* SlideLineButton.m in Sources */,
 				888AB906215245B100FFDB92 /* EmojiKeyboardView.m in Sources */,
 				888ABAEE2153735100FFDB92 /* EmojiItemViewCell.m in Sources */,
 				888AB8D4215229E100FFDB92 /* AppDelegate.m in Sources */,

@@ -7,7 +7,7 @@
 //
 
 #import "EmojiKeyboardView.h"
-
+#import "SlideLineButton.h"
 
 @interface EmojiKeyboardView()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
@@ -239,11 +239,18 @@
     }];
     for(int i=0; i<allEmojiModel.allEmojis.count; i++){
         //下方表情类别滑动栏
-        UIButton *cateButton = [[UIButton alloc]initWithFrame:CGRectMake(i*40, 0, 40, 40)];
+        UIButton *cateButton = [[UIButton alloc]initWithFrame:CGRectMake(i*41, 0, 40, 40)];
+        SlideLineButton *cateSlideButton = [[SlideLineButton alloc]initWithFrame:CGRectMake(i*41, 0, 40, 40) SlideButtonStyle:slideButtonStyleDefault];
+        
         [cateButton setImage:[UIImage imageNamed:allEmojiModel.allEmojis[i].cateImg] forState:UIControlStateNormal];
         [cateButton setTag:i];
         [cateButton addTarget:self action:@selector(changeEmojiCate:) forControlEvents:UIControlEventTouchUpInside];
-        [self.emojiCateScrollView addSubview:cateButton];
+        
+        [cateSlideButton setImage:[UIImage imageNamed:allEmojiModel.allEmojis[i].cateImg] forState:UIControlStateNormal];
+        [cateSlideButton setTag:i];
+        [cateSlideButton addTarget:self action:@selector(changeEmojiCate:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.emojiCateScrollView addSubview:cateSlideButton];
     }
 }
 
