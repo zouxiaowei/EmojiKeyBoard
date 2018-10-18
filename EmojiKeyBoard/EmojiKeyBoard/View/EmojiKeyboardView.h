@@ -30,7 +30,7 @@
 @property (nonatomic,assign) NSUInteger currentEmojiCateIndex;
 @property (nonatomic,weak) id<EmojiKeyboardViewDelegate> delegate;
 @property (nonatomic,weak) id<EmojiKeyboardViewDataSource> datasource;
-@property (nonatomic) CGFloat ScreenWidth;
+@property (nonatomic) CGFloat screenWidth;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 - (void)reloadAllData:(AllEmojiModel *)emojiModel;  //更新数据源

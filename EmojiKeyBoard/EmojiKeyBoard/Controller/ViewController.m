@@ -112,6 +112,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     aEmojiCate.EmojiItems = emojis;
     aEmojiCate.emojiKind = EmojiKindNormal;
     aEmojiCate.cateImg = @"alien";
+    aEmojiCate.rowNum = 7;
     
     //读取颜文字
     NSString *path1 = [[NSBundle mainBundle]pathForResource:@"emotion" ofType:@"txt"];
@@ -127,8 +128,9 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     }
     EmojiCategory *textEmojiCate = [EmojiCategory new];
     textEmojiCate.EmojiItems = textEmojis;
-    textEmojiCate.emojiKind = EmojiKindTextEmoji;
+    textEmojiCate.emojiKind = EmojiKindText;
     textEmojiCate.cateImg = @"zzz";
+    textEmojiCate.rowNum = 3;
     
     
     //读取动作
@@ -147,8 +149,9 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     
     EmojiCategory *wordsEmojiCate = [EmojiCategory new];
     wordsEmojiCate.EmojiItems = wordsEmojis;
-    wordsEmojiCate.emojiKind = EmojiKindTextDescription;
+    wordsEmojiCate.emojiKind = EmojiKindText;
     wordsEmojiCate.cateImg = @"x";
+    wordsEmojiCate.rowNum = 3;
     
     //构造emojiModel
     self.allEmojiModel.allEmojis = [NSArray arrayWithObjects:aEmojiCate,textEmojiCate,wordsEmojiCate,nil];
