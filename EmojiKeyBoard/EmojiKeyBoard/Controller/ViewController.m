@@ -108,6 +108,10 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
         emojiObj.ImageName = emoji[@"ImageName"];
         [emojis addObject:emojiObj];
     }
+    int pageNum = ceil((float)emojis.count/21);
+    while (emojis.count < pageNum*21){
+        [emojis addObject:[EmojiItem new]];
+    }
     EmojiCategory *aEmojiCate = [EmojiCategory new];
     aEmojiCate.EmojiItems = emojis;
     aEmojiCate.emojiKind = EmojiKindNormal;
@@ -131,7 +135,10 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     textEmojiCate.emojiKind = EmojiKindText;
     textEmojiCate.cateImg = @"zzz";
     textEmojiCate.rowNum = 3;
-    
+    int pageNum2 = ceil((float)textEmojis.count/21);
+    while (textEmojis.count < pageNum2*9){
+        [textEmojis addObject:[EmojiItem new]];
+    }
     
     //读取动作
     NSString *path2=[[NSBundle mainBundle]pathForResource:@"words" ofType:@"txt"];
@@ -152,6 +159,10 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     wordsEmojiCate.emojiKind = EmojiKindText;
     wordsEmojiCate.cateImg = @"x";
     wordsEmojiCate.rowNum = 3;
+    int pageNum3 = ceil((float)wordsEmojis.count/9);
+    while (wordsEmojis.count < pageNum3*9){
+        [wordsEmojis addObject:[EmojiItem new]];
+    }
     
     //构造emojiModel
     self.allEmojiModel.allEmojis = [NSArray arrayWithObjects:aEmojiCate,textEmojiCate,wordsEmojiCate,nil];

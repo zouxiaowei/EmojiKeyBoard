@@ -9,10 +9,6 @@
 #import "EmojiKeyboardView.h"
 #import "SlideLineButton.h"
 
-static NSInteger kNormalEmojiRowNum = 7;  //普通emoji表情列数
-static NSInteger kTextEmojiRowNum = 3;   //text emoji表情列数
-static NSInteger kEmojiCollumNum = 3;    //emoji行数
-
 
 @interface EmojiKeyboardView()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
@@ -59,9 +55,10 @@ static NSInteger kEmojiCollumNum = 3;    //emoji行数
     self.backgroundColor=[UIColor whiteColor];
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc]init];
     [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    
+
     //emoji区 UICollectionView
     self.emojiArea = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 120) collectionViewLayout:layout];
+    
     [self addSubview:self.emojiArea];
     self.emojiArea.delegate = self;
     self.emojiArea.dataSource = self;
@@ -162,28 +159,28 @@ static NSInteger kEmojiCollumNum = 3;    //emoji行数
  * 2. EmojiCategory 中包含 emoji数据 类别图标 表情类别
  * 3. 返回page数根据emoji数据量和表情类别确定
  */
-- (NSUInteger)getNumOfSections:(EmojiCategory *)emojiCate{
-    long divNum=0;
-    if(emojiCate==nil){
-        return 0;
-    }else{
-        divNum = emojiCate.rowNum*kEmojiCollumNum;
-    }
-    NSUInteger page=ceil((float)emojiCate.EmojiItems.count/divNum);
-    return page;
-}
+//- (NSUInteger)getNumOfSections:(EmojiCategory *)emojiCate{
+//    long divNum=0;
+//    if(emojiCate==nil){
+//        return 0;
+//    }else{
+//        divNum = emojiCate.rowNum*kEmojiCollumNum;
+//    }
+//    NSUInteger page=ceil((float)emojiCate.EmojiItems.count/divNum);
+//    return page;
+//}
 
 /*
  * 1. 传入表情index（如emoji表情 0 ，颜文字 1，动作 2）
  * 2. 输出该类表情起始section（即返回其前面所有表情页数）
  */
-- (NSUInteger)getSectionIndexByEmojiCateIndex:(NSUInteger)index{
-    int sum=0;
-    for(int i=0;i<index;i++){
-        sum+=[self getNumOfSections:self.allEmojiModel.allEmojis[i]];
-    }
-    return sum;
-}
+//- (NSUInteger)getSectionIndexByEmojiCateIndex:(NSUInteger)index{
+//    int sum=0;
+//    for(int i=0;i<index;i++){
+//        sum+=[self getNumOfSections:self.allEmojiModel.allEmojis[i]];
+//    }
+//    return sum;
+//}
 
 
 /*
@@ -193,78 +190,85 @@ static NSInteger kEmojiCollumNum = 3;    //emoji行数
  *   emojiItem.word 为空，emojiword，delete
  */
 -(EmojiItem *) getEmojiItemByIndexpath:(NSIndexPath *)indexPath{
-    NSInteger section=indexPath.section;
-    NSInteger item=indexPath.item;
+    NSUInteger section = indexPath.section;
+    NSUInteger item = indexPath.item;
+    EmojiCategory *currentEmojiCate = self.allEmojiModel.allEmojis[section];
+    NSUInteger numInOnePage = currentEmojiCate.rowNum*3;
+    NSUInteger pageIndex = item/numInOnePage;
+    item = item - pageIndex * numInOnePage;
+    item = (item%3)*currentEmojiCate.rowNum +item/3 + pageIndex * numInOnePage;
     
-    self.currentEmojiCateIndex=[self getCateIndexBySection:indexPath.section];
-    EmojiKind emojiKind=self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].emojiKind;
+    return currentEmojiCate.EmojiItems[item];
     
-    for(EmojiCategory *emojiCate in self.allEmojiModel.allEmojis){
-        if(section >=[self getNumOfSections:emojiCate]){
-            section-=[self getNumOfSections:emojiCate];
-        }else break;
-    }
-    
-    switch (emojiKind) {
-        case EmojiKindNormal:{
-            //emoji表情 3*7 每页20个表情 1个删除
-            if(item%20==0&&item>0){
-                //删除键
-                EmojiItem *deleteEmoji=[EmojiItem new];
-                deleteEmoji.Word=@"delete";
-                return deleteEmoji;
-            }else{
-                //横纵section.item映射
-                int index=floor((float)item/3)+(item%3)*7+section*20;
-                
-                if(index<self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems.count){
-                    //正常表情
-                    return self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems[index];
-                }else{
-                    //空白区域
-                    return [EmojiItem new];
-                }
-            }
-        }
-            break;
-        case EmojiKindText:{
-            //文字表情 3*3 每页8个表情 1个删除
-            if(item%8==0&&item>0){
-                //删除键
-                EmojiItem *deleteEmoji=[EmojiItem new];
-                deleteEmoji.Word=@"delete";
-                return deleteEmoji;
-            }else{
-                //横纵section.item映射
-                int index=floor((float)item/3)+(item%3)*3+section*8;
-                
-                if(index<self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems.count){
-                    //正常表情
-                    return self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems[index];
-                }else{
-                    //空白区域
-                    return [EmojiItem new];
-                }
-            }
-        }
-        default:
-            break;
-    }
-    
-    
+//    self.currentEmojiCateIndex=[self getCateIndexBySection:indexPath.section];
+//    EmojiKind emojiKind=self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].emojiKind;
+//
+//    for(EmojiCategory *emojiCate in self.allEmojiModel.allEmojis){
+//        if(section >=[self getNumOfSections:emojiCate]){
+//            section-=[self getNumOfSections:emojiCate];
+//        }else break;
+//    }
+//
+//    switch (emojiKind) {
+//        case EmojiKindNormal:{
+//            //emoji表情 3*7 每页20个表情 1个删除
+//            if(item%20==0&&item>0){
+//                //删除键
+//                EmojiItem *deleteEmoji=[EmojiItem new];
+//                deleteEmoji.Word=@"delete";
+//                return deleteEmoji;
+//            }else{
+//                //横纵section.item映射
+//                int index=floor((float)item/3)+(item%3)*7+section*20;
+//
+//                if(index<self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems.count){
+//                    //正常表情
+//                    return self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems[index];
+//                }else{
+//                    //空白区域
+//                    return [EmojiItem new];
+//                }
+//            }
+//        }
+//            break;
+//        case EmojiKindText:{
+//            //文字表情 3*3 每页8个表情 1个删除
+//            if(item%8==0&&item>0){
+//                //删除键
+//                EmojiItem *deleteEmoji=[EmojiItem new];
+//                deleteEmoji.Word=@"delete";
+//                return deleteEmoji;
+//            }else{
+//                //横纵section.item映射
+//                int index=floor((float)item/3)+(item%3)*3+section*8;
+//
+//                if(index<self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems.count){
+//                    //正常表情
+//                    return self.allEmojiModel.allEmojis[self.currentEmojiCateIndex].EmojiItems[index];
+//                }else{
+//                    //空白区域
+//                    return [EmojiItem new];
+//                }
+//            }
+//        }
+//        default:
+//            break;
+//    }
+
+
 }
 
 /*
  * 1.传入section，计算当前是第几类表情
  */
--(NSUInteger)getCateIndexBySection:(NSUInteger)section{
-    NSUInteger cateIndex = 0;
-    while(section >= [self getNumOfSections:self.allEmojiModel.allEmojis[cateIndex]]){
-        section -= [self getNumOfSections:self.allEmojiModel.allEmojis[cateIndex]];
-        cateIndex++;
-    }
-    return cateIndex;
-}
+//-(NSUInteger)getCateIndexBySection:(NSUInteger)section{
+//    NSUInteger cateIndex = 0;
+//    while(section >= [self getNumOfSections:self.allEmojiModel.allEmojis[cateIndex]]){
+//        section -= [self getNumOfSections:self.allEmojiModel.allEmojis[cateIndex]];
+//        cateIndex++;
+//    }
+//    return cateIndex;
+//}
 
 /*
  * 用一个AllEmojiModel对象初始化此view
@@ -274,7 +278,7 @@ static NSInteger kEmojiCollumNum = 3;    //emoji行数
         [obj removeFromSuperview];
     }];
     for(int i=0; i<allEmojiModel.allEmojis.count; i++){
-        //下方表情类别滑动
+        //下方表情类别按钮
         SlideLineButton *cateSlideButton = [[SlideLineButton alloc]initWithFrame:CGRectMake(i*40, 0, 40, 40) SlideButtonStyle:slideButtonStyleRight andColor:[UIColor lightGrayColor]];
         cateSlideButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [cateSlideButton setImage:[UIImage imageNamed:allEmojiModel.allEmojis[i].cateImg] forState:UIControlStateNormal];
@@ -290,9 +294,6 @@ static NSInteger kEmojiCollumNum = 3;    //emoji行数
  * 2.sbutton action
  */
 - (void)changeEmojiCate:(UIButton *)sender{
-    if(self.currentEmojiCateIndex==sender.tag){
-        return;
-    }
     [self changeEmojiListTo:(int)sender.tag];
 }
 
@@ -303,27 +304,34 @@ static NSInteger kEmojiCollumNum = 3;    //emoji行数
  */
 - (void)changeEmojiListTo:(int)cateIndex{
     self.currentEmojiCateIndex=cateIndex;
-    self.emojiControl.numberOfPages=[self getNumOfSections:self.allEmojiModel.allEmojis[cateIndex]];
-    self.emojiControl.currentPage=0;
-    NSIndexPath* indexPath=[NSIndexPath indexPathForItem:0 inSection:[self getSectionIndexByEmojiCateIndex:cateIndex]];
-    [self.emojiArea scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    EmojiCategory *emojiCate = self.allEmojiModel.allEmojis[cateIndex];
+    
+    self.emojiControl.numberOfPages=ceil((double)emojiCate.EmojiItems.count/(emojiCate.rowNum*3));
+//    self.emojiControl.currentPage=0;
+//    NSIndexPath* indexPath=[NSIndexPath indexPathForItem:0 inSection:[self getSectionIndexByEmojiCateIndex:cateIndex]];
+    
+    self.emojiControl.currentPage = 0;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:cateIndex];
+    [self.emojiArea scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
 }
 
 #pragma mark - collectionView代理
 //section数
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    int sum=0;
-    for(EmojiCategory *emojiCate in self.allEmojiModel.allEmojis){
-        sum += [self getNumOfSections:emojiCate];
-    }
-    return sum;
+//    int sum=0;
+//    for(EmojiCategory *emojiCate in self.allEmojiModel.allEmojis){
+//        sum += [self getNumOfSections:emojiCate];
+//    }
+//    return sum;
+    
+    return self.allEmojiModel.allEmojis.count;
 }
 
 //每个section中emoji数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    NSUInteger cateIndex = [self getCateIndexBySection:section];
-    EmojiCategory *emojiCate = self.allEmojiModel.allEmojis[cateIndex];
-    return emojiCate.rowNum*kEmojiCollumNum;
+//    NSUInteger cateIndex = [self getCateIndexBySection:section];
+//    EmojiCategory *emojiCate = self.allEmojiModel.allEmojis[cateIndex];
+//    return emojiCate.rowNum*kEmojiCollumNum;
 //    if(emojiKind == EmojiKindNormal){
 //       return 21;
 //    }else if(emojiKind==EmojiKindText){
@@ -331,29 +339,36 @@ static NSInteger kEmojiCollumNum = 3;    //emoji行数
 //    }else{
 //        return 0;
 //    }
+    return self.allEmojiModel.allEmojis[section].EmojiItems.count;
 }
 
 //indexpath对应的cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    self.currentEmojiCateIndex = [self getCateIndexBySection:indexPath.section];
+//    self.currentEmojiCateIndex = [self getCateIndexBySection:indexPath.section];
+//    EmojiItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"EmojiItemViewCell" forIndexPath:indexPath];
+//    cell.backgroundColor = collectionView.backgroundColor;
+//    cell.emoji = [self getEmojiItemByIndexpath:indexPath];
+    
     EmojiItemViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"EmojiItemViewCell" forIndexPath:indexPath];
     cell.backgroundColor = collectionView.backgroundColor;
-    cell.emoji = [self getEmojiItemByIndexpath:indexPath];
+    cell.emoji = [self getEmojiItemByIndexpath:indexPath];// self.allEmojiModel.allEmojis[indexPath.section].EmojiItems[indexPath.item];
     return cell;
 }
 
 
 //indexpath对应cell大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSUInteger cateIndex=[self getCateIndexBySection:indexPath.section];
-    EmojiKind emojiKind=self.allEmojiModel.allEmojis[cateIndex].emojiKind;
+//    NSUInteger cateIndex=[self getCateIndexBySection:indexPath.section];
+//    EmojiKind emojiKind=self.allEmojiModel.allEmojis[cateIndex].emojiKind;
+//
+//    if(emojiKind==EmojiKindNormal){
+//        return CGSizeMake((int)self.screenWidth/7, 40);
+//    }else{
+//        return CGSizeMake((int)self.screenWidth/3, 40);
+//    }
     
-    if(emojiKind==EmojiKindNormal){
-        return CGSizeMake((int)self.screenWidth/7, 40);
-    }else{
-        return CGSizeMake((int)self.screenWidth/3, 40);
-    }
-    
+    EmojiCategory *emojiCate = self.allEmojiModel.allEmojis[indexPath.section];
+    return CGSizeMake((int)self.screenWidth/(emojiCate.rowNum), 40);
     
 }
 
@@ -380,10 +395,10 @@ static NSInteger kEmojiCollumNum = 3;    //emoji行数
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     EmojiItem * emoji=[self getEmojiItemByIndexpath:indexPath];
     if(emoji==nil){
-        
+
     }else if([emoji.Word isEqualToString:@"delete"]){
         if ([self.delegate respondsToSelector:@selector(didClickDelete)]) {
-            [self.delegate didClickDelete];            
+            [self.delegate didClickDelete];
         }
     }else{
         if ([self.delegate respondsToSelector:@selector(didClickEmoji:)]) {
@@ -395,16 +410,31 @@ static NSInteger kEmojiCollumNum = 3;    //emoji行数
 
 #pragma mark - scrollview delegate
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
-    int section = round(targetContentOffset->x / _screenWidth);
-    self.currentEmojiCateIndex=(int)[self getCateIndexBySection:section];
-    
-    self.emojiControl.numberOfPages = [self getNumOfSections:self.allEmojiModel.allEmojis[self.currentEmojiCateIndex]];
-    for(int i=0;i<self.allEmojiModel.allEmojis.count;i++){
-        if(section>=[self getNumOfSections:self.allEmojiModel.allEmojis[i]]){
-            section-=[self getNumOfSections:self.allEmojiModel.allEmojis[i]];
-        }else break;
+    int section = 0;
+    EmojiCategory *emojiCate;
+    int pageNum=0;
+    CGFloat targetOffsetX = targetContentOffset ->x;
+    while(targetOffsetX >= 0) {
+        emojiCate= self.allEmojiModel.allEmojis[section];
+        pageNum = ceil((double)emojiCate.EmojiItems.count/(emojiCate.rowNum*3));
+        targetOffsetX -= pageNum*self.screenWidth;
+        section++;
     }
-    self.emojiControl.currentPage=section;
+    self.currentEmojiCateIndex = --section;
+    targetOffsetX +=pageNum*self.screenWidth;
+    self.emojiControl.numberOfPages = pageNum;
+    self.emojiControl.currentPage = ceil(targetOffsetX/self.screenWidth);
+    
+//    int section = round(targetContentOffset->x / _screenWidth);
+//    self.currentEmojiCateIndex=(int)[self getCateIndexBySection:section];
+//
+//    self.emojiControl.numberOfPages = [self getNumOfSections:self.allEmojiModel.allEmojis[self.currentEmojiCateIndex]];
+//    for(int i=0;i<self.allEmojiModel.allEmojis.count;i++){
+//        if(section>=[self getNumOfSections:self.allEmojiModel.allEmojis[i]]){
+//            section-=[self getNumOfSections:self.allEmojiModel.allEmojis[i]];
+//        }else break;
+//    }
+//    self.emojiControl.currentPage=section;
 }
 
 

@@ -27,7 +27,7 @@
 @interface EmojiKeyboardView : UIView
 
 @property (nonatomic,strong) AllEmojiModel *allEmojiModel;
-@property (nonatomic,assign) NSUInteger currentEmojiCateIndex;
+@property (nonatomic,assign) NSInteger currentEmojiCateIndex;
 @property (nonatomic,weak) id<EmojiKeyboardViewDelegate> delegate;
 @property (nonatomic,weak) id<EmojiKeyboardViewDataSource> datasource;
 @property (nonatomic) CGFloat screenWidth;
