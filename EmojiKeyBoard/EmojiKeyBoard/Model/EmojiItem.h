@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface EmojiItem : NSObject
-@property (nonatomic,copy) NSString *ImageName;
-@property (nonatomic,copy) NSString *Word;
+@property (nonatomic,copy) NSString *imageName;
+@property (nonatomic,copy) NSString *word;
 
 @end

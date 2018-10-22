@@ -57,13 +57,13 @@
     
     _emoji=emoji;
     if(_emoji){
-        NSString *imgName=_emoji.ImageName;
+        NSString *imgName=_emoji.imageName;
         if(imgName==nil || imgName.length==0){
             //文字表情
             self.emojiWordLabel.hidden=NO;
             self.emojiImageView.hidden=YES;
-            if(emoji.Word!= nil && emoji.Word.length!=0){
-                [self.emojiWordLabel setText:emoji.Word];
+            if(emoji.word!= nil && emoji.word.length!=0){
+                [self.emojiWordLabel setText:emoji.word];
 //                NSArray<CALayer *> *layers = [self createEmojiLines];
 //                self.layer.sublayers = layers;
                 self.layer.borderColor = [UIColor grayColor].CGColor;

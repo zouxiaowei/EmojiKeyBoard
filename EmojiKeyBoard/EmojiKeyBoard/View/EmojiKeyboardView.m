@@ -253,7 +253,15 @@
 
     
     EmojiCategory *emojiCate = self.allEmojiModel.allEmojis[indexPath.section];
-    int width =(int)self.screenWidth/(emojiCate.rowNum);
+    NSInteger width = floor((float)self.screenWidth/(emojiCate.rowNum));
+    NSInteger item = indexPath.item;
+    NSInteger rowNum = emojiCate.rowNum;
+    NSInteger subLength = self.screenWidth % rowNum;
+    
+    //判断是否是右边界的emoji 如果是 宽度需要加长sublength ，使得一行表情宽度和等于屏幕宽度
+    if(((item/3+1)%rowNum) == 0){
+        width += subLength;
+    }
     return CGSizeMake(width, 40);
     
 }
@@ -285,7 +293,7 @@
     }else{
         if ([self.delegate respondsToSelector:@selector(didClickEmoji:)]){
             [self.delegate didClickEmoji:emoji];
-            NSLog(@"emoji img :%@",emoji.Word);
+            NSLog(@"emoji img :%@",emoji.word);
         }
     }
    

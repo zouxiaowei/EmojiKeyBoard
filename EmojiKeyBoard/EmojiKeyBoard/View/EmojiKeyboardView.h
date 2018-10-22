@@ -12,7 +12,7 @@
 
 @protocol EmojiKeyboardViewDelegate <NSObject>
 
-@required
+@optional
 
 - (void)didClickEmoji:(EmojiItem *)emojiItem;
 - (void)didClickSend;
@@ -27,7 +27,7 @@
 @property (nonatomic,strong) AllEmojiModel *allEmojiModel;
 @property (nonatomic) NSInteger currentEmojiCateIndex;
 @property (nonatomic,weak) id<EmojiKeyboardViewDelegate> delegate;
-@property (nonatomic) CGFloat screenWidth;
+@property (nonatomic) NSInteger screenWidth;
 @property (nonatomic, copy)void (^didDeleteHandler)(void);
 
 - (instancetype)initWithFrame:(CGRect)frame;

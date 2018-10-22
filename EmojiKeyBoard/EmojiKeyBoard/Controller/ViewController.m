@@ -105,8 +105,8 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     NSArray <EmojiItem *> *emojiList = [NSArray arrayWithContentsOfFile:emojiPath];
     for(NSDictionary *emoji in emojiList){
         EmojiItem *emojiObj = [[EmojiItem alloc]init];
-        emojiObj.Word = emoji[@"Word"];
-        emojiObj.ImageName = emoji[@"ImageName"];
+        emojiObj.word = emoji[@"Word"];
+        emojiObj.imageName = emoji[@"ImageName"];
         [emojis addObject:emojiObj];
     }
     int pageNum = ceil((float)emojis.count/21);
@@ -127,8 +127,8 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
                                                componentsSeparatedByString:@"\n"]];
     for(NSString *textEmoji in lines1){
         EmojiItem *tempEmoji = [EmojiItem new];
-        tempEmoji.Word = textEmoji;
-        tempEmoji.ImageName = nil;
+        tempEmoji.word = [textEmoji stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        tempEmoji.imageName = nil;
         [textEmojis addObject:tempEmoji];
     }
     EmojiCategory *textEmojiCate = [EmojiCategory new];
@@ -150,8 +150,8 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     
     for(NSString *wordsEmoji in lines2){
         EmojiItem *tempEmoji = [EmojiItem new];
-        tempEmoji.Word = wordsEmoji;
-        tempEmoji.ImageName = nil;
+        tempEmoji.word = [wordsEmoji stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        tempEmoji.imageName = nil;
         [wordsEmojis addObject:tempEmoji];
     }
     
@@ -248,8 +248,8 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 
 #pragma mark - emojiViewDelegate
 - (void)didClickEmoji:(EmojiItem *)emojiItem{
-    if(emojiItem.Word){
-        self.inputTextView.text=[self.inputTextView.text stringByAppendingString:emojiItem.Word];
+    if(emojiItem.word){
+        self.inputTextView.text=[self.inputTextView.text stringByAppendingString:emojiItem.word];
     }
 }
 - (void)didClickSend{
