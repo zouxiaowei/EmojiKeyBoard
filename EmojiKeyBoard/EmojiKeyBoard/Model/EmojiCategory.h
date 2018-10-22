@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger, EmojiKind){
 };
 
 @interface EmojiCategory : NSObject
-@property (nonatomic,strong) NSArray<EmojiItem *> *EmojiItems;
+@property (nonatomic,strong) NSArray<EmojiItem *> *emojiItems;
 
 //表情种类 normal（emoji表情） textEmoji（颜文字） textDescription（动作描述）
 @property (nonatomic) EmojiKind emojiKind;

@@ -16,9 +16,9 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     currentKeyBoardTypeEmoji,      //表情键盘
 };
 
-@interface ViewController () <UITextViewDelegate, EmojiKeyboardViewDelegate>
+@interface ViewController ()<UITextViewDelegate,EmojiKeyboardViewDelegate>
 
-@property (nonatomic,assign) CurrentKeyBoardType currentKeyBoardType;
+@property (nonatomic) CurrentKeyBoardType currentKeyBoardType;
 @property (nonatomic,strong) UITextView *inputTextView;
 @property (nonatomic,strong) UIButton *emojiKeyboardButton;
 
@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 
 - (void)setup{
     self.currentKeyBoardType = currentKeyBoardTypeNone;
-    self.allEmojiModel = [AllEmojiModel new];
+    self.allEmojiModel = [[AllEmojiModel alloc]init];
     
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(keyBoardWillShow:)
@@ -84,6 +84,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     
     //表情键盘
     self.emojiKeyboardView = [[EmojiKeyboardView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+    self.emojiKeyboardView.delegate = self;
     [self.view addSubview:self.emojiKeyboardView];
     [self.emojiKeyboardView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.equalTo(self.view);
@@ -91,7 +92,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
         
     }];
     [self.emojiKeyboardView setHidden:YES];
-    self.emojiKeyboardView.delegate=self;
+
 }
 
 - (void)loadData {
@@ -113,7 +114,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
         [emojis addObject:[EmojiItem new]];
     }
     EmojiCategory *aEmojiCate = [EmojiCategory new];
-    aEmojiCate.EmojiItems = emojis;
+    aEmojiCate.emojiItems = emojis;
     aEmojiCate.emojiKind = EmojiKindNormal;
     aEmojiCate.cateImg = @"alien";
     aEmojiCate.rowNum = 7;
@@ -131,7 +132,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
         [textEmojis addObject:tempEmoji];
     }
     EmojiCategory *textEmojiCate = [EmojiCategory new];
-    textEmojiCate.EmojiItems = textEmojis;
+    textEmojiCate.emojiItems = textEmojis;
     textEmojiCate.emojiKind = EmojiKindText;
     textEmojiCate.cateImg = @"zzz";
     textEmojiCate.rowNum = 3;
@@ -155,7 +156,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     }
     
     EmojiCategory *wordsEmojiCate = [EmojiCategory new];
-    wordsEmojiCate.EmojiItems = wordsEmojis;
+    wordsEmojiCate.emojiItems = wordsEmojis;
     wordsEmojiCate.emojiKind = EmojiKindText;
     wordsEmojiCate.cateImg = @"x";
     wordsEmojiCate.rowNum = 3;
@@ -223,9 +224,6 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     return YES;
 }
 
-//- (void)textViewDidBeginEditing:(UITextView *)textView{
-//    self.currentKeyBoardType=currentKeyBoardTypeNormal;
-//}
 
 #pragma mark --键盘的显示隐藏--
 -(void)keyBoardWillShow:(NSNotification *)notification{
@@ -249,26 +247,27 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 
 
 #pragma mark - emojiViewDelegate
-- (void)didclickEmoji:(EmojiItem *)emojiItem{
+- (void)didClickEmoji:(EmojiItem *)emojiItem{
     if(emojiItem.Word){
         self.inputTextView.text=[self.inputTextView.text stringByAppendingString:emojiItem.Word];
     }
 }
-
-- (void)didclickSend{
+- (void)didClickSend{
     NSLog(@"%@",self.inputTextView.text);
     self.inputTextView.text=@"";
 }
 
-- (void)didclickDelete{
+- (void)didClickDelete{
     NSString *str=self.inputTextView.text;
-    
-    self.inputTextView.text=[str substringToIndex:str.length-1];
+    if(str.length>0){
+        self.inputTextView.text=[str substringToIndex:str.length-1];
+    }
+
 }
 
-- (void)didclickAdd {
-    NSLog(@"add click");
-    
+- (void)didClickAdd {
+    NSLog(@"delegate add click");
+
     return;
 }
 
