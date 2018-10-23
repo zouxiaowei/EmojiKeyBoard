@@ -67,7 +67,7 @@
 //                NSArray<CALayer *> *layers = [self createEmojiLines];
 //                self.layer.sublayers = layers;
                 self.layer.borderColor = [UIColor grayColor].CGColor;
-                self.layer.borderWidth = 0.3f;
+                self.layer.borderWidth = 0.2f;
             }else{
                 [self.emojiWordLabel setText:nil];
                 self.layer.borderWidth = 0;

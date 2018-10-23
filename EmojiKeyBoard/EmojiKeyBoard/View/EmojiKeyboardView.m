@@ -97,6 +97,10 @@
     [self.deleteEmojiButton addTarget:self action:@selector(deleteEmojiButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.deleteEmojiButton setBackgroundColor:[UIColor whiteColor]];
     
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(deleteMore:)];
+    
+    [self.deleteEmojiButton addGestureRecognizer:longPress];
+    
     //发送消息button
     self.sendMessageButton = [[SlideLineButton alloc]initWithFrame:CGRectMake(self.frame.size.width-40,160 , 40, 40)
                                                    SlideButtonStyle:slideButtonStyleLeft
@@ -160,6 +164,17 @@
     }
     if(self.didDeleteHandler) {
         self.didDeleteHandler();
+    }
+}
+- (void) deleteMore:(SlideLineButton *)sender {
+    if(sender.state == UIGestureRecognizerStateBegan){
+        if([self.delegate respondsToSelector:@selector(startLongPressDelete)]&&[self.delegate respondsToSelector:@selector(endLongPressDelete)]){
+            [self.delegate startLongPressDelete];
+        }
+    }else if(sender.state == UIGestureRecognizerStateEnded){
+        if([self.delegate respondsToSelector:@selector(endLongPressDelete)]){
+            [self.delegate endLongPressDelete];
+        }
     }
 }
 
@@ -288,18 +303,16 @@
 //点击emoji
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     EmojiItem * emoji=[self getEmojiItemByIndexpath:indexPath];
-    if(emoji==nil){
-
-    }else{
-        if ([self.delegate respondsToSelector:@selector(didClickEmoji:)]){
-            [self.delegate didClickEmoji:emoji];
-            NSLog(@"emoji img :%@",emoji.word);
-        }
+    
+    if ([self.delegate respondsToSelector:@selector(didClickEmoji:)]){
+        [self.delegate didClickEmoji:emoji];
+        NSLog(@"emoji img :%@",emoji.word);
     }
    
 }
 
 #pragma mark - scrollview delegate
+// 翻页时根据偏移量更新pagecontrol 和 currentEmojiCateIndex
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
     int section = 0;
     EmojiCategory *emojiCate;

@@ -25,6 +25,8 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 @property (nonatomic,strong) EmojiKeyboardView *emojiKeyboardView;
 @property (nonatomic,strong) AllEmojiModel *allEmojiModel;
 
+@property (nonatomic,strong) NSTimer *timer;
+
 @end
 
 
@@ -259,6 +261,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 
 - (void)didClickDelete{
     NSString *str=self.inputTextView.text;
+    
     if(str.length>0){
         self.inputTextView.text=[str substringToIndex:str.length-1];
     }
@@ -267,8 +270,23 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 
 - (void)didClickAdd {
     NSLog(@"delegate add click");
-
+    
     return;
+}
+
+- (void)startLongPressDelete{
+    [self.timer invalidate];
+    self.timer = nil;
+    self.timer = [NSTimer timerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        [self didClickDelete];
+    }];
+    [[NSRunLoop mainRunLoop]addTimer:self.timer forMode:NSRunLoopCommonModes];
+    
+}
+
+- (void)endLongPressDelete{
+    [self.timer invalidate];
+    self.timer = nil;
 }
 
 @end

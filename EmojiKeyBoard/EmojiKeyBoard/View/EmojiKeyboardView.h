@@ -18,6 +18,8 @@
 - (void)didClickSend;
 - (void)didClickDelete;
 - (void)didClickAdd;
+- (void)startLongPressDelete;
+- (void)endLongPressDelete;
 - (AllEmojiModel *) emojiEmodelForEmojiKeyBoard;
 
 @end
