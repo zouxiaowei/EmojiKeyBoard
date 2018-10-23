@@ -277,9 +277,13 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 - (void)startLongPressDelete{
     [self.timer invalidate];
     self.timer = nil;
-    self.timer = [NSTimer timerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
-        [self didClickDelete];
-    }];
+    if (@available(iOS 10.0, *)) {
+        self.timer = [NSTimer timerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+            [self didClickDelete];
+        }];
+    } else {
+        // Fallback on earlier versions
+    }
     [[NSRunLoop mainRunLoop]addTimer:self.timer forMode:NSRunLoopCommonModes];
     
 }
