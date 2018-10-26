@@ -97,80 +97,99 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 
 }
 
+
+/*
+ * 1. 检查本地文件是否有emoji数据，有则读取，无则从工程资源中导入
+ */
 - (void)loadData {
-    NSMutableArray<EmojiItem *> *emojis = [NSMutableArray array];
-    NSMutableArray<EmojiItem *> *textEmojis = [NSMutableArray array];
-    NSMutableArray<EmojiItem *> *wordsEmojis = [NSMutableArray array];
+    NSString *documentPath = [self documentPath];
+    NSString *normalEmojiPath = [documentPath stringByAppendingPathComponent:@"emoji.plist"];
+    NSString *wordEmojiPath = [documentPath stringByAppendingPathComponent:@"words.txt"];
+    NSString *emotionPath = [documentPath stringByAppendingPathComponent:@"emotion.txt"];
+    NSMutableArray *emojiCateArray = [NSMutableArray array];
     
-    //emoji表情
-    NSString *emojiPath = [[NSBundle mainBundle] pathForResource:@"emoji" ofType:@"plist"];
-    NSArray <EmojiItem *> *emojiList = [NSArray arrayWithContentsOfFile:emojiPath];
-    for(NSDictionary *emoji in emojiList){
-        EmojiItem *emojiObj = [[EmojiItem alloc]init];
-        emojiObj.word = emoji[@"Word"];
-        emojiObj.imageName = emoji[@"ImageName"];
-        [emojis addObject:emojiObj];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(![fileManager fileExistsAtPath:normalEmojiPath]){
+        NSString *tempEmojiPath = [[NSBundle mainBundle] pathForResource:@"emoji" ofType:@"plist"];
+        NSArray *emojiList = [[NSArray alloc]initWithContentsOfFile:tempEmojiPath];
+        [emojiList writeToFile:normalEmojiPath atomically:YES];
     }
-    int pageNum = ceil((float)emojis.count/21);
-    while (emojis.count < pageNum*21){
-        [emojis addObject:[EmojiItem new]];
+    
+    if(![fileManager fileExistsAtPath:wordEmojiPath]){
+        NSString *tempEmojiPath = [[NSBundle mainBundle] pathForResource:@"words" ofType:@"txt"];
+        NSString *wordEmojis = [[NSString alloc]initWithContentsOfFile:tempEmojiPath encoding:NSUTF8StringEncoding error:nil];
+        [wordEmojis writeToFile:wordEmojiPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
     }
+    
+    if(![fileManager fileExistsAtPath:emotionPath]){
+        NSString *tempEmojiPath = [[NSBundle mainBundle] pathForResource:@"emotion" ofType:@"txt"];
+        NSString *emotions = [[NSString alloc]initWithContentsOfFile:tempEmojiPath encoding:NSUTF8StringEncoding error:nil];
+        [emotions writeToFile:emotionPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    }
+    
     EmojiCategory *aEmojiCate = [EmojiCategory new];
-    aEmojiCate.emojiItems = emojis;
+    aEmojiCate.emojiItems = [self emojiItemsFromFile:normalEmojiPath andNumPerPage:21];
     aEmojiCate.emojiKind = EmojiKindNormal;
     aEmojiCate.cateImg = @"alien";
     aEmojiCate.rowNum = 7;
     
-    //读取颜文字
-    NSString *path1 = [[NSBundle mainBundle]pathForResource:@"emotion" ofType:@"txt"];
-    NSArray *lines1 = [NSArray arrayWithArray:[[NSString stringWithContentsOfFile:path1
-                                                                        encoding:NSUTF8StringEncoding
-                                                                           error:nil]
-                                               componentsSeparatedByString:@"\n"]];
-    for(NSString *textEmoji in lines1){
-        EmojiItem *tempEmoji = [EmojiItem new];
-        tempEmoji.word = [textEmoji stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        tempEmoji.imageName = nil;
-        [textEmojis addObject:tempEmoji];
-    }
-    EmojiCategory *textEmojiCate = [EmojiCategory new];
-    textEmojiCate.emojiItems = textEmojis;
-    textEmojiCate.emojiKind = EmojiKindText;
-    textEmojiCate.cateImg = @"zzz";
-    textEmojiCate.rowNum = 3;
-    int pageNum2 = ceil((float)textEmojis.count/21);
-    while (textEmojis.count < pageNum2*9){
-        [textEmojis addObject:[EmojiItem new]];
-    }
+    EmojiCategory *wordEmojiCate = [EmojiCategory new];
+    wordEmojiCate.emojiItems = [self emojiItemsFromFile:wordEmojiPath andNumPerPage:9];
+    wordEmojiCate.emojiKind = EmojiKindText;
+    wordEmojiCate.cateImg = @"zzz";
+    wordEmojiCate.rowNum = 3;
+
     
-    //读取动作
-    NSString *path2=[[NSBundle mainBundle]pathForResource:@"words" ofType:@"txt"];
-    NSArray *lines2=[NSArray arrayWithArray:[[NSString stringWithContentsOfFile:path2
-                                                                       encoding:NSUTF8StringEncoding
-                                                                          error:nil]
-                                             componentsSeparatedByString:@"\n"]];
-    
-    for(NSString *wordsEmoji in lines2){
-        EmojiItem *tempEmoji = [EmojiItem new];
-        tempEmoji.word = [wordsEmoji stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        tempEmoji.imageName = nil;
-        [wordsEmojis addObject:tempEmoji];
-    }
-    
-    EmojiCategory *wordsEmojiCate = [EmojiCategory new];
-    wordsEmojiCate.emojiItems = wordsEmojis;
-    wordsEmojiCate.emojiKind = EmojiKindText;
-    wordsEmojiCate.cateImg = @"x";
-    wordsEmojiCate.rowNum = 3;
-    int pageNum3 = ceil((float)wordsEmojis.count/9);
-    while (wordsEmojis.count < pageNum3*9){
-        [wordsEmojis addObject:[EmojiItem new]];
-    }
+    EmojiCategory *emotionEmojiCate = [EmojiCategory new];
+    emotionEmojiCate.emojiItems = [self emojiItemsFromFile:emotionPath andNumPerPage:9];
+    emotionEmojiCate.emojiKind = EmojiKindText;
+    emotionEmojiCate.cateImg = @"x";
+    emotionEmojiCate.rowNum = 3;
+
     
     //构造emojiModel
-    self.allEmojiModel.allEmojis = [NSArray arrayWithObjects:aEmojiCate,textEmojiCate,wordsEmojiCate,nil];
+    self.allEmojiModel.allEmojis = [NSArray arrayWithObjects:aEmojiCate,wordEmojiCate,emotionEmojiCate,nil];
     
     [self.emojiKeyboardView reloadAllData:self.allEmojiModel]; //刷新数据源
+}
+
+- (NSString *)documentPath{
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    return documentPath;
+}
+
+- (NSArray *) emojiItemsFromFile:(NSString *)filePath andNumPerPage:(NSInteger)num{
+    NSMutableArray<EmojiItem *> *emojiItems = [NSMutableArray array];
+    
+    if([filePath hasSuffix:@"plist"]){
+        NSArray *plistNormalEmojis = [NSArray arrayWithContentsOfFile:filePath];
+        for(NSDictionary *emoji in plistNormalEmojis){
+            EmojiItem *emojiObj = [[EmojiItem alloc]init];
+            emojiObj.word = emoji[@"Word"];
+            emojiObj.imageName = emoji[@"ImageName"];
+            [emojiItems addObject:emojiObj];
+        }
+    }else if([filePath hasSuffix:@"txt"]){
+        NSString *linesString = [[NSString alloc]initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+        NSArray *lines = [linesString componentsSeparatedByString:@"\r\n"];
+        
+        for(NSString *textEmoji in lines){
+            EmojiItem *tempEmoji = [EmojiItem new];
+            tempEmoji.word = [textEmoji stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            tempEmoji.imageName = nil;
+            [emojiItems addObject:tempEmoji];
+        }
+
+    }
+    
+    int pageNum = ceil((float)emojiItems.count/num);
+    while (emojiItems.count < pageNum*num){
+        [emojiItems addObject:[EmojiItem new]];
+    }
+    
+    return emojiItems;
+
 }
 
 //空白区域收回键盘
