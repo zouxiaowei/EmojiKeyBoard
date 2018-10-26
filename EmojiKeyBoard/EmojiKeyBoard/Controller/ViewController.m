@@ -127,26 +127,12 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
         [emotions writeToFile:emotionPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
     }
     
-    EmojiCategory *aEmojiCate = [EmojiCategory new];
-    aEmojiCate.emojiItems = [self emojiItemsFromFile:normalEmojiPath andNumPerPage:21];
-    aEmojiCate.emojiKind = EmojiKindNormal;
-    aEmojiCate.cateImg = @"alien";
-    aEmojiCate.rowNum = 7;
-    
-    EmojiCategory *wordEmojiCate = [EmojiCategory new];
-    wordEmojiCate.emojiItems = [self emojiItemsFromFile:wordEmojiPath andNumPerPage:9];
-    wordEmojiCate.emojiKind = EmojiKindText;
-    wordEmojiCate.cateImg = @"zzz";
-    wordEmojiCate.rowNum = 3;
+    EmojiCategory *aEmojiCate = [EmojiCategory emojiCateWithFile:normalEmojiPath emojiKind:EmojiKindNormal cateImg:@"alien" andRowNum:7];
 
-    
-    EmojiCategory *emotionEmojiCate = [EmojiCategory new];
-    emotionEmojiCate.emojiItems = [self emojiItemsFromFile:emotionPath andNumPerPage:9];
-    emotionEmojiCate.emojiKind = EmojiKindText;
-    emotionEmojiCate.cateImg = @"x";
-    emotionEmojiCate.rowNum = 3;
+    EmojiCategory *wordEmojiCate = [EmojiCategory emojiCateWithFile:wordEmojiPath emojiKind:EmojiKindText cateImg:@"zzz" andRowNum:3];
 
-    
+    EmojiCategory *emotionEmojiCate = [EmojiCategory emojiCateWithFile:emotionPath emojiKind:EmojiKindText cateImg:@"x" andRowNum:3];
+
     //构造emojiModel
     self.allEmojiModel.allEmojis = [NSArray arrayWithObjects:aEmojiCate,wordEmojiCate,emotionEmojiCate,nil];
     

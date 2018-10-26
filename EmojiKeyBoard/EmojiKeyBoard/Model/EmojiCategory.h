@@ -24,5 +24,7 @@ typedef NS_ENUM(NSInteger, EmojiKind){
 //类别图标
 @property (nonatomic,strong) NSString *cateImg;
 
++ (instancetype) emojiCateWithFile:(NSString *)filePath emojiKind:(EmojiKind)emojikind cateImg:(NSString *)cateImgUrl andRowNum:(NSInteger)num;
 
++ (NSArray *) emojiItemsFromFile:(NSString *)filePath andNumPerPage:(NSInteger)num;
 @end
