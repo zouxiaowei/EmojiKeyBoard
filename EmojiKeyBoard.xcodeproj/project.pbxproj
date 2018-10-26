@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		882862262183047700BDB83E /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 882862252183047700BDB83E /* BaseModel.m */; };
 		883C4FF2215B5F3100426B73 /* emotion.txt in Resources */ = {isa = PBXBuildFile; fileRef = 883C4FF0215B5F3000426B73 /* emotion.txt */; };
 		883C4FF3215B5F3100426B73 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 883C4FF1215B5F3100426B73 /* words.txt */; };
 		888AB8D4215229E100FFDB92 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 888AB8D3215229E100FFDB92 /* AppDelegate.m */; };
@@ -22,7 +23,6 @@
 		888AB90E215248C800FFDB92 /* emoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 888AB90D215248C800FFDB92 /* emoji.plist */; };
 		888ABAEE2153735100FFDB92 /* EmojiItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 888ABAED2153735100FFDB92 /* EmojiItemViewCell.m */; };
 		888ABAF12159CAE500FFDB92 /* EmojiCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 888ABAF02159CAE500FFDB92 /* EmojiCategory.m */; };
-		888ABAF42159D2B500FFDB92 /* AllEmojiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 888ABAF32159D2B500FFDB92 /* AllEmojiModel.m */; };
 		888CD9A8216095B300EC258D /* libMasonry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 888CD9A7216095B300EC258D /* libMasonry.a */; };
 		88E225DC217467DB002063E6 /* SlideLineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E225DB217467DB002063E6 /* SlideLineButton.m */; };
 /* End PBXBuildFile section */
@@ -50,6 +50,8 @@
 		796EB23E15737C8699E3EAFC /* Pods-EmojiKeyBoardTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoardTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoardTests/Pods-EmojiKeyBoardTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F45F7CD32A50A64022CAE25 /* Pods-EmojiKeyBoardUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoardUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoardUITests/Pods-EmojiKeyBoardUITests.release.xcconfig"; sourceTree = "<group>"; };
 		80174B85EFEF11081E248BAF /* Pods-EmojiKeyBoardUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoardUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoardUITests/Pods-EmojiKeyBoardUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		882862242183047700BDB83E /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
+		882862252183047700BDB83E /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 		883C4FF0215B5F3000426B73 /* emotion.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = emotion.txt; sourceTree = "<group>"; };
 		883C4FF1215B5F3100426B73 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 		888AB8CF215229E100FFDB92 /* EmojiKeyBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmojiKeyBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,8 +79,6 @@
 		888ABAED2153735100FFDB92 /* EmojiItemViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmojiItemViewCell.m; sourceTree = "<group>"; };
 		888ABAEF2159CAE500FFDB92 /* EmojiCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmojiCategory.h; sourceTree = "<group>"; };
 		888ABAF02159CAE500FFDB92 /* EmojiCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmojiCategory.m; sourceTree = "<group>"; };
-		888ABAF22159D2B500FFDB92 /* AllEmojiModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AllEmojiModel.h; sourceTree = "<group>"; };
-		888ABAF32159D2B500FFDB92 /* AllEmojiModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AllEmojiModel.m; sourceTree = "<group>"; };
 		888CD9A7216095B300EC258D /* libMasonry.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMasonry.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E225DA217467DB002063E6 /* SlideLineButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlideLineButton.h; sourceTree = "<group>"; };
 		88E225DB217467DB002063E6 /* SlideLineButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideLineButton.m; sourceTree = "<group>"; };
@@ -190,12 +190,12 @@
 		88E225D72174441B002063E6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				882862242183047700BDB83E /* BaseModel.h */,
+				882862252183047700BDB83E /* BaseModel.m */,
 				888AB9072152480E00FFDB92 /* EmojiItem.h */,
 				888AB9082152480E00FFDB92 /* EmojiItem.m */,
 				888ABAEF2159CAE500FFDB92 /* EmojiCategory.h */,
 				888ABAF02159CAE500FFDB92 /* EmojiCategory.m */,
-				888ABAF22159D2B500FFDB92 /* AllEmojiModel.h */,
-				888ABAF32159D2B500FFDB92 /* AllEmojiModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -428,7 +428,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				888ABAF42159D2B500FFDB92 /* AllEmojiModel.m in Sources */,
 				888AB8D7215229E100FFDB92 /* ViewController.m in Sources */,
 				888AB8E2215229E200FFDB92 /* main.m in Sources */,
 				888AB9092152480E00FFDB92 /* EmojiItem.m in Sources */,
@@ -436,6 +435,7 @@
 				888AB906215245B100FFDB92 /* EmojiKeyboardView.m in Sources */,
 				888ABAEE2153735100FFDB92 /* EmojiItemViewCell.m in Sources */,
 				888AB8D4215229E100FFDB92 /* AppDelegate.m in Sources */,
+				882862262183047700BDB83E /* BaseModel.m in Sources */,
 				888ABAF12159CAE500FFDB92 /* EmojiCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,7 +8,7 @@
 
 #import "EmojiKeyboardView.h"
 #import "SlideLineButton.h"
-
+#import "EmojiCategory.h"
 
 @interface EmojiKeyboardView()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
@@ -47,7 +47,6 @@
 -(void)setup{
     self.screenWidth=[UIScreen mainScreen].bounds.size.width;
     self.currentEmojiCateIndex=0;
-    self.allEmojiModel=[[AllEmojiModel alloc]init];
 }
 
 
@@ -77,7 +76,7 @@
     self.emojiControl.pageIndicatorTintColor=[UIColor lightGrayColor];
 
     //+号button
-//    self.addEmojiCateButton=[[UIButton alloc]initWithFrame:CGRectMake(0, 160, 40, 40)];
+
     self.addEmojiCateButton = [[SlideLineButton alloc]initWithFrame:CGRectMake(0, 160, 40, 40)
                                                    SlideButtonStyle:slideButtonStyleRight
                                                            andColor:[UIColor lightGrayColor]];
@@ -123,23 +122,13 @@
 
 }
 
-- (void)drawRect:(CGRect)rect{
-    
-    
-    [super drawRect:rect];
-}
 
-//controller 中数据源发生变化后需要调用此方法进行重新配置view
-- (void)reloadAllData:(AllEmojiModel *)emojiModel {
-    self.allEmojiModel = emojiModel;
-    [self initCatePanelWithAllEmojiModel:self.allEmojiModel];
+- (void)reloadEmojis:(NSArray *)emojicates{
+    self.emojiCates = [NSArray arrayWithArray:emojicates];
+    [self initCatePanelWithEmojiCates:emojicates];
     [self.emojiArea reloadData];
 }
 
-
-+ (BOOL)requiresConstraintBasedLayout {
-    return YES;
-}
 
 //委托
 - (void)addEmojiCateButtonClick:(SlideLineButton *)sender {
@@ -161,9 +150,6 @@
 - (void) deleteEmojiButtonClick:(SlideLineButton *)sender {
     if([self.delegate respondsToSelector:@selector(didClickDelete)]){
         [self.delegate didClickDelete];
-    }
-    if(self.didDeleteHandler) {
-        self.didDeleteHandler();
     }
 }
 - (void) deleteMore:(SlideLineButton *)sender {
@@ -187,7 +173,7 @@
 -(EmojiItem *) getEmojiItemByIndexpath:(NSIndexPath *)indexPath{
     NSUInteger section = indexPath.section;
     NSUInteger item = indexPath.item;
-    EmojiCategory *currentEmojiCate = self.allEmojiModel.allEmojis[section];
+    EmojiCategory *currentEmojiCate = self.emojiCates[section];//self.allEmojiModel.allEmojis[section];
     NSUInteger numInOnePage = currentEmojiCate.rowNum*3;
     NSUInteger pageIndex = item/numInOnePage;
     item = item - pageIndex * numInOnePage;
@@ -199,18 +185,21 @@
 }
 
 
+
 /*
- * 用一个AllEmojiModel对象初始化此view
+ * 用一个emojicategory 数组对象初始化此view
  */
-- (void)initCatePanelWithAllEmojiModel:(AllEmojiModel *)allEmojiModel{
+- (void)initCatePanelWithEmojiCates:(NSArray *)emojiCates{
     [self.emojiCateScrollView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj removeFromSuperview];
     }];
-    for(int i=0; i<allEmojiModel.allEmojis.count; i++){
+    for(int i=0; i<emojiCates.count; i++){
         //下方表情类别按钮
+        EmojiCategory *emojiCate = emojiCates[i];
         SlideLineButton *cateSlideButton = [[SlideLineButton alloc]initWithFrame:CGRectMake(i*40, 0, 40, 40) SlideButtonStyle:slideButtonStyleRight andColor:[UIColor lightGrayColor]];
+        
         cateSlideButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
-        [cateSlideButton setImage:[UIImage imageNamed:allEmojiModel.allEmojis[i].cateImg] forState:UIControlStateNormal];
+        [cateSlideButton setImage:[UIImage imageNamed:emojiCate.cateImg] forState:UIControlStateNormal];
         [cateSlideButton setTag:i];
         [cateSlideButton addTarget:self action:@selector(changeEmojiCate:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -233,7 +222,7 @@
  */
 - (void)changeEmojiListTo:(int)cateIndex{
     self.currentEmojiCateIndex=cateIndex;
-    EmojiCategory *emojiCate = self.allEmojiModel.allEmojis[cateIndex];
+    EmojiCategory *emojiCate = self.emojiCates[cateIndex];
     
     self.emojiControl.numberOfPages=ceil((double)emojiCate.emojiItems.count/(emojiCate.rowNum*3));
     
@@ -245,12 +234,15 @@
 #pragma mark - collectionView代理
 //section数
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return self.allEmojiModel.allEmojis.count;
+//    return self.allEmojiModel.allEmojis.count;
+    return self.emojiCates.count;
 }
 
 //每个section中emoji数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.allEmojiModel.allEmojis[section].emojiItems.count;
+//    return self.allEmojiModel.allEmojis[section].emojiItems.count;
+    EmojiCategory *emojiCate = self.emojiCates[section];
+    return emojiCate.emojiItems.count;
 }
 
 //indexpath对应的cell
@@ -267,7 +259,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
     
-    EmojiCategory *emojiCate = self.allEmojiModel.allEmojis[indexPath.section];
+    EmojiCategory *emojiCate = self.emojiCates[indexPath.section];//self.allEmojiModel.allEmojis[indexPath.section];
     NSInteger width = floor((float)self.screenWidth/(emojiCate.rowNum));
     NSInteger item = indexPath.item;
     NSInteger rowNum = emojiCate.rowNum;
@@ -319,7 +311,7 @@
     int pageNum=0;
     CGFloat targetOffsetX = targetContentOffset ->x;
     while(targetOffsetX >= 0) {
-        emojiCate= self.allEmojiModel.allEmojis[section];
+        emojiCate= self.emojiCates[section];//self.allEmojiModel.allEmojis[section];
         pageNum = ceil((double)emojiCate.emojiItems.count/(emojiCate.rowNum*3));
         targetOffsetX -= pageNum*self.screenWidth;
         section++;

@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface EmojiItem : NSObject
+#import "BaseModel.h"
+@interface EmojiItem : BaseModel
 @property (nonatomic,copy) NSString *imageName;
 @property (nonatomic,copy) NSString *word;
-
 @end

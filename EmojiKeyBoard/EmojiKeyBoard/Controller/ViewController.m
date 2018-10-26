@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "EmojiKeyboardView.h"
 #import <Masonry/Masonry.h>
-
+#import "EmojiCategory.h"
 typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     currentKeyBoardTypeNone,       //无键盘
     currentKeyBoardTypeNormal,     //常规键盘
@@ -21,10 +21,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 @property (nonatomic) CurrentKeyBoardType currentKeyBoardType;
 @property (nonatomic,strong) UITextView *inputTextView;
 @property (nonatomic,strong) UIButton *emojiKeyboardButton;
-
 @property (nonatomic,strong) EmojiKeyboardView *emojiKeyboardView;
-@property (nonatomic,strong) AllEmojiModel *allEmojiModel;
-
 @property (nonatomic,strong) NSTimer *timer;
 
 @end
@@ -42,8 +39,7 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 
 - (void)setup{
     self.currentKeyBoardType = currentKeyBoardTypeNone;
-    self.allEmojiModel = [[AllEmojiModel alloc]init];
-    
+
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(keyBoardWillShow:)
                                                 name:UIKeyboardWillShowNotification
@@ -103,10 +99,11 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
  */
 - (void)loadData {
     NSString *documentPath = [self documentPath];
+    
     NSString *normalEmojiPath = [documentPath stringByAppendingPathComponent:@"emoji.plist"];
     NSString *wordEmojiPath = [documentPath stringByAppendingPathComponent:@"words.txt"];
     NSString *emotionPath = [documentPath stringByAppendingPathComponent:@"emotion.txt"];
-    NSMutableArray *emojiCateArray = [NSMutableArray array];
+
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:normalEmojiPath]){
@@ -133,10 +130,8 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
 
     EmojiCategory *emotionEmojiCate = [EmojiCategory emojiCateWithFile:emotionPath emojiKind:EmojiKindText cateImg:@"x" andRowNum:3];
 
-    //构造emojiModel
-    self.allEmojiModel.allEmojis = [NSArray arrayWithObjects:aEmojiCate,wordEmojiCate,emotionEmojiCate,nil];
-    
-    [self.emojiKeyboardView reloadAllData:self.allEmojiModel]; //刷新数据源
+
+    [self.emojiKeyboardView reloadEmojis:[NSArray arrayWithObjects:aEmojiCate,wordEmojiCate,emotionEmojiCate,nil]];
 }
 
 - (NSString *)documentPath{
@@ -145,38 +140,6 @@ typedef NS_ENUM(NSInteger, CurrentKeyBoardType){
     return documentPath;
 }
 
-- (NSArray *) emojiItemsFromFile:(NSString *)filePath andNumPerPage:(NSInteger)num{
-    NSMutableArray<EmojiItem *> *emojiItems = [NSMutableArray array];
-    
-    if([filePath hasSuffix:@"plist"]){
-        NSArray *plistNormalEmojis = [NSArray arrayWithContentsOfFile:filePath];
-        for(NSDictionary *emoji in plistNormalEmojis){
-            EmojiItem *emojiObj = [[EmojiItem alloc]init];
-            emojiObj.word = emoji[@"Word"];
-            emojiObj.imageName = emoji[@"ImageName"];
-            [emojiItems addObject:emojiObj];
-        }
-    }else if([filePath hasSuffix:@"txt"]){
-        NSString *linesString = [[NSString alloc]initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-        NSArray *lines = [linesString componentsSeparatedByString:@"\r\n"];
-        
-        for(NSString *textEmoji in lines){
-            EmojiItem *tempEmoji = [EmojiItem new];
-            tempEmoji.word = [textEmoji stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            tempEmoji.imageName = nil;
-            [emojiItems addObject:tempEmoji];
-        }
-
-    }
-    
-    int pageNum = ceil((float)emojiItems.count/num);
-    while (emojiItems.count < pageNum*num){
-        [emojiItems addObject:[EmojiItem new]];
-    }
-    
-    return emojiItems;
-
-}
 
 //空白区域收回键盘
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

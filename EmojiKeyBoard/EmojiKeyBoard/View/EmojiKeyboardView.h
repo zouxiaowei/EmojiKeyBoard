@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AllEmojiModel.h"
 #import "EmojiItemViewCell.h"
 
 @protocol EmojiKeyboardViewDelegate <NSObject>
@@ -20,19 +19,20 @@
 - (void)didClickAdd;
 - (void)startLongPressDelete;
 - (void)endLongPressDelete;
-- (AllEmojiModel *) emojiEmodelForEmojiKeyBoard;
+
 
 @end
 
 @interface EmojiKeyboardView : UIView
 
-@property (nonatomic,strong) AllEmojiModel *allEmojiModel;
+@property (nonatomic, strong) NSArray *emojiCates;
 @property (nonatomic) NSInteger currentEmojiCateIndex;
-@property (nonatomic,weak) id<EmojiKeyboardViewDelegate> delegate;
 @property (nonatomic) NSInteger screenWidth;
-@property (nonatomic, copy)void (^didDeleteHandler)(void);
+
+@property (nonatomic,weak) id<EmojiKeyboardViewDelegate> delegate;
+
 
 - (instancetype)initWithFrame:(CGRect)frame;
-- (void)reloadAllData:(AllEmojiModel *)emojiModel;  //更新数据源
+- (void)reloadEmojis:(NSArray *)emojicates;
 
 @end
