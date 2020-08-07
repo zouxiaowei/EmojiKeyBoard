@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72C1E85AF6441C3B16284336 /* libPods-EmojiKeyBoardUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62B66B1F8F010284A94F788B /* libPods-EmojiKeyBoardUITests.a */; };
 		882862262183047700BDB83E /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 882862252183047700BDB83E /* BaseModel.m */; };
 		883C4FF2215B5F3100426B73 /* emotion.txt in Resources */ = {isa = PBXBuildFile; fileRef = 883C4FF0215B5F3000426B73 /* emotion.txt */; };
 		883C4FF3215B5F3100426B73 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 883C4FF1215B5F3100426B73 /* words.txt */; };
@@ -25,6 +26,8 @@
 		888ABAF12159CAE500FFDB92 /* EmojiCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 888ABAF02159CAE500FFDB92 /* EmojiCategory.m */; };
 		888CD9A8216095B300EC258D /* libMasonry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 888CD9A7216095B300EC258D /* libMasonry.a */; };
 		88E225DC217467DB002063E6 /* SlideLineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E225DB217467DB002063E6 /* SlideLineButton.m */; };
+		9DE83F5395867B372037213F /* libPods-EmojiKeyBoard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E230D1001DA1F93789A8DD46 /* libPods-EmojiKeyBoard.a */; };
+		AAE229DEFF5229E1C6DC4E1A /* libPods-EmojiKeyBoardTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E35D94AD9FD9A69002B2D34 /* libPods-EmojiKeyBoardTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		10A041DAF0D7C38C1EFA8F8E /* Pods-EmojiKeyBoard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoard/Pods-EmojiKeyBoard.debug.xcconfig"; sourceTree = "<group>"; };
+		5E35D94AD9FD9A69002B2D34 /* libPods-EmojiKeyBoardTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EmojiKeyBoardTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		62B66B1F8F010284A94F788B /* libPods-EmojiKeyBoardUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EmojiKeyBoardUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EC1D35EE74EA94F39A21CAE /* Pods-EmojiKeyBoardTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoardTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoardTests/Pods-EmojiKeyBoardTests.release.xcconfig"; sourceTree = "<group>"; };
 		796EB23E15737C8699E3EAFC /* Pods-EmojiKeyBoardTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoardTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoardTests/Pods-EmojiKeyBoardTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7F45F7CD32A50A64022CAE25 /* Pods-EmojiKeyBoardUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoardUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoardUITests/Pods-EmojiKeyBoardUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -82,6 +87,7 @@
 		888CD9A7216095B300EC258D /* libMasonry.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMasonry.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E225DA217467DB002063E6 /* SlideLineButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlideLineButton.h; sourceTree = "<group>"; };
 		88E225DB217467DB002063E6 /* SlideLineButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideLineButton.m; sourceTree = "<group>"; };
+		E230D1001DA1F93789A8DD46 /* libPods-EmojiKeyBoard.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EmojiKeyBoard.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E80BECB6BF5E20FB9B076552 /* Pods-EmojiKeyBoard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmojiKeyBoard.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmojiKeyBoard/Pods-EmojiKeyBoard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +97,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				888CD9A8216095B300EC258D /* libMasonry.a in Frameworks */,
+				9DE83F5395867B372037213F /* libPods-EmojiKeyBoard.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAE229DEFF5229E1C6DC4E1A /* libPods-EmojiKeyBoardTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72C1E85AF6441C3B16284336 /* libPods-EmojiKeyBoardUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +124,9 @@
 			isa = PBXGroup;
 			children = (
 				888CD9A7216095B300EC258D /* libMasonry.a */,
+				E230D1001DA1F93789A8DD46 /* libPods-EmojiKeyBoard.a */,
+				5E35D94AD9FD9A69002B2D34 /* libPods-EmojiKeyBoardTests.a */,
+				62B66B1F8F010284A94F788B /* libPods-EmojiKeyBoardUITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
